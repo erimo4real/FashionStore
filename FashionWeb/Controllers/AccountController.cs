@@ -13,7 +13,7 @@ using System.Web.Security;
 
 namespace FashionWeb.Controllers
 {
-      [Authorize]
+      //[Authorize]
     public class AccountController : Controller
     {
         private readonly UserServices services;

@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace FashionWeb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CategoryController : Controller
     {
         public tbl_Category cat;

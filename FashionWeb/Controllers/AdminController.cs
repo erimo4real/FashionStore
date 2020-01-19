@@ -9,7 +9,7 @@ using FashionWeb.Models;
 
 namespace FashionWeb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AdminController : Controller
     {
         private readonly UserServices UserS;

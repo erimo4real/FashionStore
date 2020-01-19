@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace FashionWeb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ProductController : Controller
     {
         public ProductService _ps = new ProductService();
