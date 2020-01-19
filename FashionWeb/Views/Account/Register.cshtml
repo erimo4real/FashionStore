@@ -1,0 +1,137 @@
+﻿@model FashionWeb.Models.RegistrationViewModel
+
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fashion Admin - Register</title>
+    <!-- begin::global styles -->
+    <link rel="stylesheet" href="~/Assets/vendors/basic.bundle.css" type="text/css">
+    <!-- end::global styles -->
+    <!-- begin::custom styles -->
+    <link rel="stylesheet" href="~/Assets/css/bundle.min.css" type="text/css">
+    <!-- end::custom styles -->
+</head>
+<body>
+    <!-- begin::page loader-->
+    <div class="page-loader">
+        <div class="spinner-border"></div>
+        <span>Loading ...</span>
+    </div>
+
+    <!-- end::page loader -->
+    <div class="user-page">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h4>Register</h4>
+                </div>
+                @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+                {
+                    if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Success!</strong>@ViewBag.Message
+                            <a href="~/Account/Login" class="btn btn-bd-primary">Login</a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group mb-4">
+                                <div>
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "User name" } })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-4">
+                                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "First Name" } })
+                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-4">
+                                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Last Name" } })
+                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-4">
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Email" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-4">
+                                        @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Date Of Birth" } })
+                                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-4">
+                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Password" } })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-4">
+                                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Confirm Password" } })
+                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <div>
+                                    <input type="file" name="ImageFile" required />
+                                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch" checked="">
+                                    <label class="custom-control-label" for="customSwitch">I agree to the Terms and Privacy.</label>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">Create Account</button>
+                            <p class="text-right">
+                                @Html.ActionLink("Login", "Login", new { @class = "text-underline" }) Already a user?
+                            </p>
+                        </div>
+                        if (ViewBag.Message != null)
+                        {
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong>@ViewBag.Message
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <!-- begin::global scripts -->
+        <script src="~/Assets/vendors/basic.bundle.js"></script>
+        <!-- end::global scripts -->
+        <!-- begin::custom scripts -->
+        <script src="~/Assets/js/site.min.js"></script>
+        <!-- end::custom scripts -->
+</body>
+</html>

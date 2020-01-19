@@ -1,0 +1,150 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fashion Admin - Dashboard</title>
+
+    <!-- begin::global styles -->
+    <link rel="stylesheet" href="~/Assets/vendors/basic.bundle.css" type="text/css">
+    <!-- end::global styles -->
+    <!-- begin::dataTable -->
+    <link rel="stylesheet" href="../assets/vendors/dataTable/responsive.bootstrap.min.css" type="text/css">
+    <!-- end::dataTable -->
+    <!-- begin::custom styles -->
+    <link rel="stylesheet" href="~/Assets/css/bundle.min.css" type="text/css">
+    <!-- end::custom styles -->
+
+</head>
+<body>
+
+    <!-- begin::page loader-->
+    <div class="page-loader">
+        <div class="spinner-border"></div>
+        <span>Loading ...</span>
+    </div>
+
+    <!-- end::page loader -->
+    <!-- begin::main sidebar -->
+    @Html.Partial("_Mian-Sidebar(Admin)")
+    <!-- end::main sidebar -->
+    <!-- begin::navbar -->
+    @Html.Partial("_Nav(Admin)")
+    <!-- end::navbar -->
+    <!-- begin::main content -->
+    <main class="main-content">
+
+        <!-- begin::page header -->
+        <div class="page-header">
+            <h5>Dashboard</h5>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+            </ol>
+        </div>
+        <!-- end::page header -->
+
+        <div class="row">
+            <div class="col-lg-3 col-sm-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h6>
+                            <i class="fa fa-money m-r-10 text-primary"></i> Revenue
+                        </h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>All Sales</span>
+                            <h2 class="m-b-0 text-primary">$18M</h2>
+                        </div>
+                        <div class="progress m-t-b-10" style="height: 7px">
+                            <div class="progress-bar bg-primary-gradient" role="progressbar" style="width: 71%"
+                                 aria-valuenow="71" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h6>
+                            <i class="fa fa-globe m-r-10 text-dribbble"></i> Affiliates
+                        </h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Direct</span>
+                            <h2 class="m-b-0 text-dribbble">$35M</h2>
+                        </div>
+                        <div class="progress m-t-b-10" style="height: 7px">
+                            <div class="progress-bar bg-dribbble" role="progressbar" style="width: 39%"
+                                 aria-valuenow="39" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h6>
+                            <i class="fa fa-user text-success m-r-10"></i> Burn Rate
+                        </h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Phone</span>
+                            <h2 class="m-b-0 text-success">$5M</h2>
+                        </div>
+                        <div class="progress m-t-b-10" style="height: 7px">
+                            <div class="progress-bar bg-success-gradient" role="progressbar" style="width: 50%"
+                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h6>
+                            <i class="fa fa-star text-warning m-r-10"></i> Burn Rate
+                        </h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Social Media</span>
+                            <h2 class="m-b-0 text-warning">$5M</h2>
+                        </div>
+                        <div class="progress m-t-b-10" style="height: 7px">
+                            <div class="progress-bar bg-warning-gradient" role="progressbar" style="width: 50%"
+                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        @RenderBody();
+
+    </main>
+    <!-- end::main content -->
+    <!-- begin::global scripts -->
+    <script src="~/Assets/vendors/basic.bundle.js"></script>
+    <!-- end::global scripts -->
+    <!-- begin::dataTable -->
+    <script src="../assets/vendors/dataTable/jquery.dataTables.min.js"></script>
+    <script src="../assets/vendors/dataTable/dataTables.bootstrap4.min.js"></script>
+    <script src="../assets/vendors/dataTable/dataTables.responsive.min.js"></script>
+    <script src="../assets/vendors/dataTable/demo/index.js"></script>
+    <!-- end::dataTable -->
+    <!-- begin::chart -->
+    <script src="~/Assets/vendors/charts/chart.min.js"></script>
+    <script src="~/Assets/vendors/charts/demo/index.js"></script>
+    <!-- end::chart -->
+    <!-- begin::custom scripts -->
+    <script src="~/Assets/js/site.min.js"></script>
+    <!-- end::custom scripts -->
+
+</body>
+</html>

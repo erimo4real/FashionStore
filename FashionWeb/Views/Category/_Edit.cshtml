@@ -1,0 +1,70 @@
+﻿@model FashionWeb.Models.CategoryViewModel
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Admin - Categort Details </title>
+    <!-- begin::global styles -->
+    <link rel="stylesheet" href="~/Assets/vendors/basic.bundle.css" type="text/css">
+    <!-- end::global styles -->
+    <!-- begin::custom styles -->
+    <link rel="stylesheet" href="~/Assets/css/bundle.min.css" type="text/css">
+    <!-- end::custom styles -->
+</head>
+<body>
+    <!-- begin::page loader-->
+    <div class="page-loader">
+        <div class="spinner-border"></div>
+        <span>Loading ...</span>
+    </div>
+    <!-- end::page loader -->
+    <div class="user-page">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h4>Fashion Admin</h4>
+                    <p>Edit Category</p>
+                </div>
+                @using (Html.BeginForm("Edit", "Category", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    if (ViewBag.Message != "")
+                    {
+                        <div class="text-danger">@ViewBag.Message</div>
+                    }
+                    @Html.HiddenFor(model => model.CategoryId)
+                    @Html.HiddenFor(model => model.AddedON)
+
+                    <div class="form-group mb-4">
+                        <div>
+                            @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control form-control-lg", id = "exampleInputEmail1", placeholder = "Email" } })
+                            @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">Edit Category</button>
+
+                    <div class="text-center">
+                        Go Back?    @Html.ActionLink("index", "index", "Category")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- begin::global scripts -->
+    <script src="~/Assets/vendors/basic.bundle.js"></script>
+    <!-- end::global scripts -->
+    <!-- begin::custom scripts -->
+    <script src="~/Assets/js/site.min.js"></script>
+    <!-- end::custom scripts -->
+
+    @*@section Scripts{
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    }*@
+</body>
+</html>

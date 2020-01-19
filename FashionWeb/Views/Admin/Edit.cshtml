@@ -1,0 +1,121 @@
+﻿@model FashionWeb.Models.UserViewModel
+
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fashion Admin - Update User</title>
+    <!-- begin::global styles -->
+    <link rel="stylesheet" href="~/Assets/vendors/basic.bundle.css" type="text/css">
+    <!-- end::global styles -->
+    <!-- begin::custom styles -->
+    <link rel="stylesheet" href="~/Assets/css/bundle.min.css" type="text/css">
+    <!-- end::custom styles -->
+</head>
+<body>
+    <!-- begin::page loader-->
+    <div class="page-loader">
+        <div class="spinner-border"></div>
+        <span>Loading ...</span>
+    </div>
+
+    <!-- end::page loader -->
+    <div class="user-page">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h4>Register</h4>
+                </div>
+                @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+                {
+                    if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Success!</strong>@ViewBag.Message
+                            <a href="~/Account/Login" class="btn btn-bd-primary">Login</a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.user.ID)
+                @Html.HiddenFor(model => model.user.AddedON)
+                @Html.HiddenFor(model => model.user.ImageName)
+                <div class="form-group mb-4">
+                    <div>
+                        @Html.EditorFor(model => model.user.UserName, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "User name" } })
+                        @Html.ValidationMessageFor(model => model.user.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            @Html.EditorFor(model => model.user.FirstName, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "First Name" } })
+                            @Html.ValidationMessageFor(model => model.user.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            @Html.EditorFor(model => model.user.LastName, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Last Name" } })
+                            @Html.ValidationMessageFor(model => model.user.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Email" } })
+                            @Html.ValidationMessageFor(model => model.user.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            @Html.EditorFor(model => model.user.DOB, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Date Of Birth" } })
+                            @Html.ValidationMessageFor(model => model.user.DOB, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <div>
+                        <input type="file" name="ImageFile" />
+                        @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">Update Account</button>
+                <p class="text-right">
+                    @Html.ActionLink("Login", "Login", new { @class = "text-underline" }) Back to Index
+                </p>
+            </div>
+                        if (ViewBag.Message != null)
+                        {
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong>@ViewBag.Message
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <!-- begin::global scripts -->
+        <script src="~/Assets/vendors/basic.bundle.js"></script>
+        <!-- end::global scripts -->
+        <!-- begin::custom scripts -->
+        <script src="~/Assets/js/site.min.js"></script>
+        <!-- end::custom scripts -->
+</body>
+</html>

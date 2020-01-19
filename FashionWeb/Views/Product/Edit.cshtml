@@ -1,0 +1,122 @@
+﻿@model FashionWeb.Models.ProductViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="user-page">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h4>Add Product</h4>
+            </div>
+            @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+            {
+                if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-success">
+                        <strong>Success!</strong>@ViewBag.Message
+                        <a href="~/Product/index" class="btn btn-bd-primary">index</a>
+                    </div>
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.product.ProductId)
+            @Html.HiddenFor(model => model.product.Image)
+            @Html.HiddenFor(model => model.product.Image1)
+            @Html.HiddenFor(model => model.product.AddedOn)
+            <div class="form-group mb-4">
+                <div>
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "product name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group mb-4">
+                <div>
+                    @Html.EditorFor(model => model.product.Description, new { htmlAttributes = new { @class = "form-control form-control-xl", placeholder = "product Descriptions" } })
+                    @Html.ValidationMessageFor(model => model.product.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        @Html.DropDownListFor(m => m.SelectedBrand, Model.BrandList, $"-- Select Band --", new { @class = "form-control form-control-lg" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        @Html.DropDownListFor(m => m.SeletedCategory, Model.CategoryList, $"-- Select category --", new { @class = "form-control form-control-lg" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        @Html.EditorFor(model => model.product.Price, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Price" } })
+                        @Html.ValidationMessageFor(model => model.product.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        @Html.EditorFor(model => model.product.Discount, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Discount" } })
+                        @Html.ValidationMessageFor(model => model.product.Discount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        @Html.CheckBoxFor(model => model.product.IsNew, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "isnew" } })
+                        <label for="customCheck3">IsNew</label>
+                        @Html.ValidationMessageFor(model => model.product.IsNew, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <select class="form-control" name="Gender">
+                            <option>@Model.product.Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Mkids</option>
+                            <option>Fkids</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-4">
+                <div>
+                    <input type="file" name="image" value="Upload Image" />
+                </div>
+            </div>
+            <div class="form-group mb-4">
+                <div>
+                    <input type="file" name="image1" value="Upload Image" />
+                </div>
+            </div>
+            <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">Add New Product</button>
+            <p class="text-right">
+                <a href="~/Product/index" class="btn btn-bd-primary">Go Back?</a>
+            </p>
+        </div>
+                    if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Error!</strong>@ViewBag.Message
+                        </div>
+                    }
+                }
+            }
+
+        </div>
+    </div>
+</div>
+

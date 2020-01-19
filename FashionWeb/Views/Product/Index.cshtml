@@ -1,0 +1,190 @@
+﻿@model IEnumerable<FashionWeb.Models.RecordProductViewModel>
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link href="~/sweetalert2/package/dist/sweetalert2.min.css" rel="stylesheet" />
+<script src="~/sweetalert2/package/dist/Jquery.min.js"></script>
+<script src="~/sweetalert2/package/dist/sweetalert2.all.js"></script>
+
+@*<div class="col-md-3 m-t-b-20">
+	@if (ViewBag.Status == true)
+	{
+		<div class="alert alert-success" role="alert">
+			@ViewBag.Message
+		</div>
+	}
+	@if (ViewBag.Status == false)
+	{
+		<div class="alert alert-danger" role="alert">
+			<strong>Error!</strong> @ViewBag.Message
+		</div>
+	}
+</div>*@
+<script type="text/javascript">
+
+    @if(ViewBag.Status == true)
+	{
+		< text >
+        $(window).load(function()
+	     {
+            $(document).ready(function ()
+            {
+				  swal({  
+                        title: "Message",  
+                        text: "@ViewBag.Message",  
+                        type: "success"  
+                    });  
+            }); 
+         });
+        </ text>
+     }
+
+	 @if(ViewBag.Status == false)
+	{
+		< text >
+        $(window).load(function()
+	     {
+            $(document).ready(function ()
+            {
+				  swal({  
+                        title: "Message",  
+                        text: "<strong>Error!</strong> @ViewBag.Message",  
+                        type: "success"  
+                    });  
+            }); 
+         });
+        </ text>
+     }
+</script>
+
+
+
+<!-- begin::main content -->
+<!-- begin::page header -->
+<div class="page-header">
+	<h5>
+		<i class="fa fa-table m-r-5"></i>
+		Product Table
+	</h5>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="#">Product</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a href="#">
+				Tables
+			</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a href="~/Product/Add">
+				Add Product
+			</a>
+		</li>
+	</ol>
+</div>
+<!-- end::page header -->
+
+<div class="card">
+	<div class="card-body">
+		<table id="example1" class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>product Name</th>
+					<th>Category Name</th>
+					<th>Brand Name</th>
+					<th>Price</th>
+					<th>Discount</th>
+					<th>Iamge</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+								{
+				<tr>
+					<td></td>
+					<td>@item.product.ProductId</td>
+					<td>@item.category.CategoryName</td>
+					<td>@item.brand.BrandName</td>
+					<td>@item.product.Price</td>
+					<td>@item.product.Discount</td>
+					<td><img class="rounded-circle" src="~/ProductImage/@item.product.Image" width="30" , height="30" alt=""></td>
+					<td>
+						<a href="~/Product/Edit?id=@item.product.ProductId" class="btn btn-bd-primary">Edit</a>
+						<button id="link" onclick="Delete(@item.product.ProductId)" class="btn btn-bd-primary">Delete</button>
+					</td>
+				</tr>
+			}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>#</th>
+					<th>product Name</th>
+					<th>Category Name</th>
+					<th>Brand Name</th>
+					<th>Price</th>
+					<th>Rate</th>
+					<th>Iamge</th>
+					<th>Action</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+<!-- end::main content -->
+<script type="text/javascript">
+
+    function Delete(productId)
+    {
+							swal({
+								title: "Are you sure?",
+								text: "Once Deleted, you will not be able to recover the Data!",
+								icon: "warning",
+								buttons: true,
+								dangerMode: true,
+							})
+                                .then((willDelete) =>
+                                {
+									if (willDelete) {
+										$.ajax({
+											type: "POST",
+											data: {
+												id: productId
+											},
+											url: "/Product/Delete",
+											dataType: "json",
+											success: function (response) {
+												swal("Product Details Deleted Successfully !", {
+													icon: "success",
+												}).then(function () {
+													window.location.href = "/Product/Index"
+												});
+
+											},
+											failure: function (response) {
+												alert(response.responseText);
+											},
+											error: function (response) {
+												alert(response.responseText);
+											}
+										});
+
+									}
+									else {
+										swal("Product Details will not  Delete !");
+									}
+								});
+	}
+
+
+
+
+			//$(document).on('click', '#warning', function(e) {
+	  //      });
+			//$(document).on('click', '#link', function(e) {
+			//});
+</script>

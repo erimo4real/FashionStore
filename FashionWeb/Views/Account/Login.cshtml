@@ -1,0 +1,100 @@
+﻿@model FashionWeb.Models.LoginViewModel
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AppStore Admin - Login</title>
+    <!-- begin::global styles -->
+    <link rel="stylesheet" href="~/Assets/vendors/basic.bundle.css" type="text/css">
+    <!-- end::global styles -->
+    <!-- begin::custom styles -->
+    <link rel="stylesheet" href="~/Assets/css/bundle.min.css" type="text/css">
+    <!-- end::custom styles -->
+</head>
+<body>
+    <!-- begin::page loader-->
+    <div class="page-loader">
+        <div class="spinner-border"></div>
+        <span>Loading ...</span>
+    </div>
+    <!-- end::page loader -->
+    <div class="user-page">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h4>AppStore Admin</h4>
+                    <p>Sign in to continue.</p>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    if (ViewBag.Message != "")
+                    {
+                        <div class="text-danger">@ViewBag.Message</div>
+                    }
+
+                    <div class="form-group mb-4">
+                        <div>
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control form-control-lg", id = "exampleInputEmail1", placeholder = "Email" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                        @*<input type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">*@
+                    </div>
+                    <div class="form-group mb-4">
+                        <div>
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control form-control-lg", id = "exampleInputPassword1", placeholder = "Password" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                        @*<input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">*@
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">Sign In</button>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="custom-control custom-checkbox">
+                            @Html.CheckBoxFor(model => model.RememberMe, new { @class = "custom-control-input", id = "customCheck" })
+                            @*<input type="checkbox" class="custom-control-input" id="customCheck">*@
+                            <label class="custom-control-label" for="customCheck">Keep me signed in</label>
+                        </div>
+                        @Html.ActionLink("Forget Password", "ForgotPassword", "Account", new { @class = "auth-link text-black" })
+                        @*<a href="#" class="auth-link text-black">Forgot password?</a>*@
+                    </div>
+                    @*<div class="row">
+                            <div class="col-md-6 mb-4">
+                                <a href="#" class="btn btn-outline-facebook btn-block">
+                                    <i class="fa fa-facebook-square m-r-5"></i> With Facebook
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <a href="#" class="btn btn-outline-google btn-block">
+                                    <i class="fa fa-google m-r-5"></i> With Google
+                                </a>
+                            </div>
+                        </div>*@
+                    <div class="text-center">
+                        Don't have an account?    @Html.ActionLink(" Sign Up Here", "Registration", "Account")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- begin::global scripts -->
+    <script src="~/Assets/vendors/basic.bundle.js"></script>
+    <!-- end::global scripts -->
+    <!-- begin::custom scripts -->
+    <script src="~/Assets/js/site.min.js"></script>
+    <!-- end::custom scripts -->
+
+    @section Scripts{
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    }
+</body>
+</html>A
