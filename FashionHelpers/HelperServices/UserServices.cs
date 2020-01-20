@@ -14,6 +14,8 @@ namespace FashionHelpers.HelperServices
         private readonly IGenericRepository<tbl_Users> respository;
         public FashionAppDBEntities context = new FashionAppDBEntities();
 
+        public tbl_Users activeUser { get; set; }
+
         public UserServices()
         {
             this.respository = new GenericRepository<tbl_Users>();

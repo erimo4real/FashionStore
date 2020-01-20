@@ -136,7 +136,8 @@ namespace FashionWeb.Controllers
             //var currentUser = HttpContext.User.Identity.Name;
             //tbl_Users user = _context.tbl_Users.Where(m => m.Email == currentUser).SingleOrDefault();
 
-            tbl_Product prod = new tbl_Product();
+            var p = _ps.context.tbl_Product.Where(prod => prod.ProductId == model.product.ProductId).SingleOrDefault();
+
             if (!ModelState.IsValid)
             {
                 ProductViewModel vm = new ProductViewModel();
@@ -155,12 +156,12 @@ namespace FashionWeb.Controllers
                     string physicalPath1 = Server.MapPath("~/ProductImage/" + ImageName);
                     // save image in folder
                     image.SaveAs(physicalPath1);
-                    prod.Image = ImageName;
+                    p.Image = ImageName;
                 }
-                else
-                {
-                    prod.Image = model.product.Image;
-                }
+                //else
+                //{
+                //    //prod.Image = model.product.Image;
+                //}
 
                 if (image1 != null)
                 {
@@ -168,25 +169,25 @@ namespace FashionWeb.Controllers
                     string physicalPath1 = Server.MapPath("~/ProductImage/" + ImageName);
                     // save image in folder
                     image1.SaveAs(physicalPath1);
-                    prod.Image1 = ImageName;
+                    p.Image1 = ImageName;
                 }
-                else
-                {
-                    prod.Image1 = model.product.Image1;
-                }
+                //else
+                //{
+                //    //prod.Image1 = model.product.Image1;
+                //}
 
-                prod.ProductId = model.product.ProductId;
-                prod.Name = model.Name;
-                prod.Price = model.product.Price;
-                prod.Description = model.product.Description;
-                prod.BrandID = Convert.ToInt32(model.SelectedBrand);
-                prod.CategoryID = Convert.ToInt32(model.SeletedCategory);
-                prod.Discount = model.product.Discount;
-                prod.IsNew = model.product.IsNew;
-                prod.Gender = collection["Gender"];
-                prod.AddedOn = model.product.AddedOn;
-                prod.UpdatedOn = DateTime.Now;
-                _ps.Update(prod);
+                p.Name = model.Name;
+                p.Price = model.product.Price;
+                p.Description = model.product.Description;
+                p.BrandID = Convert.ToInt32(model.SelectedBrand);
+                p.CategoryID = Convert.ToInt32(model.SeletedCategory);
+                p.Discount = model.product.Discount;
+                p.IsNew = model.product.IsNew;
+                p.Gender = collection["Gender"];
+              //p.AddedOn = model.product.AddedOn;
+                p.UpdatedOn = DateTime.Now;
+                _ps.context.SaveChanges();
+               //_ps.Update(prod);
             }
             ProductViewModel Pvm = new ProductViewModel();
             Pvm.BrandList = new SelectList(_context.tbl_Brands.ToList(), "ID", "BrandName");

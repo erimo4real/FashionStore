@@ -15,10 +15,12 @@
                 {
                     if (ViewBag.Message != null)
                     {
-                        <div class="alert alert-success">
-                            <strong>Success!</strong>@ViewBag.Message
-                            <a href="~/Product/index" class="btn btn-bd-primary">index</a>
-                        </div>
+            <div class="alert alert-success">
+                <strong>Success!</strong>@ViewBag.Message
+                <a href="~/Product/index" class="btn btn-bd-primary">index</a>
+                <p> or Click </p> <a href="~/Product/Add" class="btn btn-bd-primary">Add More</a>
+                <p>To Add More</p>
+            </div>
                     }
                 }
                 else

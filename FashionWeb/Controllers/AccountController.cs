@@ -56,7 +56,7 @@ namespace FashionWeb.Controllers
                     cookie.Expires = DateTime.Now.AddMinutes(timeout);
                     cookie.HttpOnly = true;
                     Response.Cookies.Add(cookie);
-
+                    
                     if (v.isAdmin == true)
                     {
                         //TempData["CurrentUser"] = model.Email;
@@ -333,7 +333,7 @@ namespace FashionWeb.Controllers
         [HttpPost]
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
+            helers.Logout();
             return RedirectToAction("Login", "Account");
         }
 

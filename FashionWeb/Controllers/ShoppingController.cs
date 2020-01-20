@@ -12,6 +12,7 @@ namespace FashionWeb.Controllers
     public class ShoppingController : Controller
     {
         public FashionAppDBEntities _context;
+
         public ShoppingController()
         {
           this._context  = new FashionAppDBEntities();
@@ -24,7 +25,7 @@ namespace FashionWeb.Controllers
         /// <returns></returns>
         public ActionResult AddProductToCart(int productId)
         {
-            //var username = HttpContext.Current.User.Identity.Name;
+           
 
             Tbl_Cart c = new Tbl_Cart();
             c.AddedOn = DateTime.Now;
