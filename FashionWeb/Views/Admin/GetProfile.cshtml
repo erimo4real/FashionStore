@@ -1,0 +1,327 @@
+﻿
+
+@{
+    ViewBag.Title = "GetProfile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+     var profileName = FashionHelpers.CommonHelpers.PublicHelper.GetActiveUser();
+}
+
+<!-- begin::main content -->
+
+
+    <!-- begin::page header -->
+    <div class="page-header">
+        <h5>
+            <i class="fa fa-user-circle-o m-r-5"></i>
+            Profile
+        </h5>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Pages</a>
+            </li>
+            <li class="breadcrumb-item">
+                Profile
+            </li>
+        </ol>
+    </div>
+    <!-- end::page header -->
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="card">
+                <div class="card-body text-center">
+                    <figure class="avatar avatar-xl m-b-20">
+                        @if (profileName.ImageName != null)
+                        {
+                            <img class="rounded-circle" src="~/Passports/@profileName.ImageName" width="30" , height="30" alt="">
+                        }
+                        else
+                        {
+                            <img src="../assets/media/img/avatar.jpg" class="rounded-circle" alt="...">
+                        }
+                    </figure>
+                    <h5>@profileName.FirstName</h5>
+                    <p>Web Developer</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus repudiandae eveniet harum.</p>
+                    <a href="#" class="btn btn-light btn-outline-light">
+                        <i class="ti-pencil m-r-5"></i> Edit Profile
+                    </a>
+                    
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h5>Profile Completion</h5>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="icon-block icon-block-floating bg-light m-r-20">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <div class="progress flex-grow-1">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 89%;" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="h6 mb-0 ml-3">89%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title d-flex justify-content-between align-items-center">
+                        <h5>Information</h5>
+                        <a href="#" class="btn btn-light btn-outline-light btn-sm">
+                            <i class="ti-pencil m-r-5"></i> Edit
+                        </a>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6 text-muted">First Name:</div>
+                        <div class="col-6">@profileName.FirstName</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6 text-muted">Last Name:</div>
+                        <div class="col-6">@profileName.LastName</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6 text-muted">Age:</div>
+                        <div class="col-6">26</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6 text-muted">Position:</div>
+                        <div class="col-6">Web Designer</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6 text-muted">City:</div>
+                        <div class="col-6">New York, USA</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6 text-muted">Address:</div>
+                        <div class="col-6">228 Park Ave Str.</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6 text-muted">Phone:</div>
+                        <div class="col-6">+1-202-555-0134</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6 text-muted">Email:</div>
+                        <div class="col-6">@profileName.Email</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-8">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h6>Activity Share</h6>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <textarea rows="3" class="form-control" placeholder="Create something"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-light">Submit</button>
+                            <div>
+                                <a href="#" data-toggle="tooltip" title="Add Image" class="btn btn-light btn-icon">
+                                    <i class="ti-image"></i>
+                                </a>
+                                <a href="#" data-toggle="tooltip" title="Add Video" class="btn btn-light btn-icon m-l-5">
+                                    <i class="ti-video-camera"></i>
+                                </a>
+                                <a href="#" data-toggle="tooltip" title="Add File" class="btn btn-light btn-icon m-l-5">
+                                    <i class="ti-file"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+
+                    <ul class="nav nav-pills flex-column flex-sm-row" id="myTab" role="tablist">
+                        <li class="flex-sm-fill text-sm-center nav-item">
+                            <a class="nav-link active" id="hometimeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="home" aria-selected="true"> Notifications</a>
+                        </li>
+                        <li class="flex-sm-fill text-sm-center nav-item">
+                            <a class="nav-link" id="photos-tab" data-toggle="tab" href="#photos" role="tab" aria-controls="profile" aria-selected="false">Photos</a>
+                        </li>
+                        <li class="flex-sm-fill text-sm-center nav-item">
+                            <a class="nav-link" id="earnings-tab" data-toggle="tab" href="#earnings" role="tab" aria-controls="earnings" aria-selected="false">Earnings</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content p-t-30" id="myTabContent">
+
+                        <div class="tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div>
+                                        <figure class="avatar avatar-sm m-r-15 bring-forward">
+                                            <img src="../assets/media/img/avatar.jpg" class="rounded-circle">
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6>Charged undefined</h6>
+                                        <p class="m-b-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, excepturi?</p>
+                                        <small class="text-muted">
+                                            <i class="fa fa-clock-o m-r-5"></i> Yesterday
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div>
+                                        <figure class="avatar avatar-sm m-r-15 bring-forward">
+                                            <span class="avatar-title bg-danger rounded-circle">K</span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <h6>Add a new user</h6>
+                                        <p class="m-b-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, excepturi?</p>
+                                        <p class="m-b-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est iusto necessitatibus officia porro repellendus rerum.</p>
+                                        <small class="text-muted">
+                                            <i class="fa fa-clock-o m-r-5"></i> 20.10.2018
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div>
+                                        <figure class="avatar avatar-sm m-r-15 bring-forward">
+                                            <span class="avatar-title bg-warning rounded-circle">
+                                                <i class="ti-image"></i>
+                                            </span>
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <div class="row m-b-5">
+                                            <div class="col-md-6">
+                                                <img src="../assets/media/img/portfolio-five.jpg" alt="" class="w-25">
+                                                <img src="../assets/media/img/portfolio-one.jpg" alt="" class="w-25">
+                                                <img src="../assets/media/img/portfolio-three.jpg" alt="" class="w-25">
+                                            </div>
+                                        </div>
+                                        <small class="text-muted">
+                                            <i class="fa fa-clock-o m-r-5"></i> 20.10.2018
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="photos-tab">
+                            <div class="row">
+                                <div class="col-lg-4 mb-3"><img class="img-fluid rounded" src="../assets/media/img/portfolio-one.jpg" alt="image"></div>
+                                <div class="col-lg-4 mb-3"><img class="img-fluid rounded" src="../assets/media/img/portfolio-two.jpg" alt="image"></div>
+                                <div class="col-lg-4 mb-3"><img class="img-fluid rounded" src="../assets/media/img/portfolio-three.jpg" alt="image"></div>
+                                <div class="col-lg-4 mb-3"><img class="img-fluid rounded" src="../assets/media/img/portfolio-four.jpg" alt="image"></div>
+                                <div class="col-lg-4 mb-3"><img class="img-fluid rounded" src="../assets/media/img/portfolio-five.jpg" alt="image"></div>
+                                <div class="col-lg-4 mb-3"><img class="img-fluid rounded" src="../assets/media/img/portfolio-six.jpg" alt="image"></div>
+                            </div>
+                            <div class="text-center p-t-5">
+                                <button class="btn btn-light btn-outline-light">
+                                    <i class="ti-upload m-r-5"></i> Upload
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="earnings" role="tabpanel" aria-labelledby="earnings-tab">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Item Sales Colunt</th>
+                                            <th>Earnings</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>monday, 12</td>
+                                            <td>
+                                                3
+                                            </td>
+                                            <td>$400</td>
+                                        </tr>
+                                        <tr>
+                                            <td>tuesday, 13</td>
+                                            <td>
+                                                2
+                                            </td>
+                                            <td>$400</td>
+                                        </tr>
+                                        <tr>
+                                            <td>wednesday, 14</td>
+                                            <td>
+                                                3
+                                            </td>
+                                            <td>$420</td>
+                                        </tr>
+                                        <tr>
+                                            <td>thursday, 15</td>
+                                            <td>
+                                                5
+                                            </td>
+                                            <td>$500</td>
+                                        </tr>
+                                        <tr>
+                                            <td>friday, 15</td>
+                                            <td>
+                                                3
+                                            </td>
+                                            <td>$400</td>
+                                        </tr>
+                                        <tr>
+                                            <td>saturday, 16</td>
+                                            <td>
+                                                3
+                                            </td>
+                                            <td>$400</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sunday, 17</td>
+                                            <td>
+                                                3
+                                            </td>
+                                            <td>$400</td>
+                                        </tr>
+                                        <tr>
+                                            <td>monday, 18</td>
+                                            <td>
+                                                3
+                                            </td>
+                                            <td>$500</td>
+                                        </tr>
+                                        <tr>
+                                            <td>tuesday, 19</td>
+                                            <td>
+                                                3
+                                            </td>
+                                            <td>$400</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="2">Total:</th>
+                                            <th>$3720</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+<!-- end::main content -->

@@ -30,7 +30,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title">
-                    <h4>Register</h4>
+                    <h4>Udate User</h4>
                 </div>
                 @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
                 {
@@ -38,7 +38,7 @@
                     {
                         <div class="alert alert-success">
                             <strong>Success!</strong>@ViewBag.Message
-                            <a href="~/Account/Login" class="btn btn-bd-primary">Login</a>
+                            <a href="~/Admin/Index" class="btn btn-bd-primary">Back to Index</a>
                         </div>
                     }
                 }
@@ -98,7 +98,8 @@
 
                 <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">Update Account</button>
                 <p class="text-right">
-                    @Html.ActionLink("Login", "Login", new { @class = "text-underline" }) Back to Index
+                    @*<a href="" @class = "text-underline">Back to Index</a>*@
+                    @Html.ActionLink("Back to Index", "index","Admin", new { @class = "text-underline" }) 
                 </p>
             </div>
                         if (ViewBag.Message != null)

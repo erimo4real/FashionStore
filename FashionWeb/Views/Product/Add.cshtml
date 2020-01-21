@@ -34,7 +34,7 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group mb-4">
                     <div>
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "product name"} })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "product name" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -90,16 +90,40 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group mb-4">
-                    <div>
-                        <input type="file" name="image" value="" required />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            @Html.CheckBoxFor(model => model.IsFeatured, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "isnew" } })
+                            <label for="customCheck3">IsFeatured</label>
+                            @Html.ValidationMessageFor(model => model.IsFeatured, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            @Html.CheckBoxFor(model => model.IsSlide, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "isnew" } })
+                            <label for="customCheck3">IsSlide</label>
+                            @Html.ValidationMessageFor(model => model.IsSlide, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
-                <div class="form-group mb-4">
-                    <div>
-                        <input type="file" name="image1" value="" required />
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            <div>
+                                <input type="file" name="image" value="" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            <div>
+                                <input type="file" name="image1" value="" required />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">Add New Product</button>
                 <p class="text-right">
                     <a href="~/Product/index" class="btn btn-bd-primary">Go Back?</a>

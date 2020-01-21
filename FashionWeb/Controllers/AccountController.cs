@@ -13,7 +13,7 @@ using System.Web.Security;
 
 namespace FashionWeb.Controllers
 {
-      //[Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private readonly UserServices services;
@@ -47,7 +47,7 @@ namespace FashionWeb.Controllers
                     return View();
                 }
                
-                if (helers.IsStringSameAsHash(model.Password , v.Password))
+                if (PublicHelper.IsStringSameAsHash(model.Password , v.Password))
                 {
                     int timeout = model.RememberMe ? 500 : 20; // 525600 min = 1 year
                     var ticket = new FormsAuthenticationTicket(model.Email, model.RememberMe, timeout);
@@ -329,11 +329,10 @@ namespace FashionWeb.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        [Authorize]
-        [HttpPost]
+        
         public ActionResult Logout()
         {
-            helers.Logout();
+            PublicHelper.Logout();
             return RedirectToAction("Login", "Account");
         }
 

@@ -1,6 +1,11 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿
 
+@{
+    var userName = FashionHelpers.CommonHelpers.PublicHelper.UserName;
+}
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
@@ -74,18 +79,19 @@
                             </li>
                             <li><a href="~/Home/about">About us</a></li>
                             <li><a href="~/Home/Contact">Contact</a></li>
-                            @if (Request.IsAuthenticated)
-                            {
-                                <strong>@Html.Encode(User.Identity.Name)</strong>
-                                @Html.ActionLink("Sign Out", "Logout", "User")
-                            }
-                            else
-                            {
-                                @Html.ActionLink("Register", "Register", "User")
-                                <span> | </span>
-                                @Html.ActionLink("Sign In", "Login", "User")
-                            }
                         </ul>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <strong>@userName</strong>
+                            @Html.ActionLink("Sign Out", "Logout", "Account")
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Register", "Register", "Account")
+                            <span> | </span>
+                            @Html.ActionLink("Sign In", "Login", "Account")
+                        }
+
                     </div>
                     <!-- Nav End -->
                 </div>

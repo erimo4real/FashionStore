@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace FashionWeb.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ShoppingController : Controller
     {
         public FashionAppDBEntities _context;

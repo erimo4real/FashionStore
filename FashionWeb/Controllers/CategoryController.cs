@@ -1,4 +1,5 @@
 ﻿using FashionDb;
+using FashionHelpers.CommonHelpers;
 using FashionHelpers.HelperServices;
 using FashionWeb.Models;
 using System;
@@ -9,7 +10,7 @@ using System.Web.Mvc;
 
 namespace FashionWeb.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class CategoryController : Controller
     {
         public tbl_Category cat;
@@ -43,8 +44,11 @@ namespace FashionWeb.Controllers
             {
                 cat = new tbl_Category()
                 {
+                   
                     CategoryName = model.CategoryName,
+                    AddedBy = Convert.ToInt32(PublicHelper.UserId),
                     AddedON = DateTime.Now
+                    
                 };
                 category.Insert(cat);
             }
@@ -77,12 +81,12 @@ namespace FashionWeb.Controllers
             }
             else
             {
-                tbl_Category c = new tbl_Category();
-                c.CategoryId = model.CategoryId;
+               var c = category.context.tbl_Category.Where(cat => cat.CategoryId == model.CategoryId).SingleOrDefault();
                 c.CategoryName = model.CategoryName;
-                c.AddedON = model.AddedON;
                 c.UpdatedOn = DateTime.Now;
-                category.Update(c);
+                c.UpdatedBy = Convert.ToInt32(PublicHelper.UserId);
+                category.context.SaveChanges();
+                //category.Update(c);
             }
 
             TempData["OperStatus"] = "Category updated Sucessfully !";

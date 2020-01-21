@@ -32,5 +32,7 @@ namespace FashionDb
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> AddedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public bool IsFeatured { get; set; }
+        public bool IsSlide { get; set; }
     }
 }

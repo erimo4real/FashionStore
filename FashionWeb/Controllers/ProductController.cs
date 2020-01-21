@@ -1,4 +1,5 @@
 ﻿using FashionDb;
+using FashionHelpers.CommonHelpers;
 using FashionHelpers.HelperServices;
 using FashionWeb.Models;
 using System;
@@ -10,14 +11,14 @@ using System.Web.Mvc;
 
 namespace FashionWeb.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ProductController : Controller
     {
         public ProductService _ps = new ProductService();
         public FashionAppDBEntities _context = new FashionAppDBEntities();
         public CategorySerivce cs = new CategorySerivce();
+        public PublicHelper phelpers = new PublicHelper();
 
-      
         // GET: Product
         public ActionResult Index()
         {
@@ -59,8 +60,7 @@ namespace FashionWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Add(ProductViewModel model , HttpPostedFileBase image, HttpPostedFileBase image1 , FormCollection collection)
         {  
-            //var currentUser = HttpContext.User.Identity.Name;
-            //tbl_Users user = _context.tbl_Users.Where(m => m.Email == currentUser).SingleOrDefault();
+            
 
             tbl_Product prod = new tbl_Product();
             if (!ModelState.IsValid)
@@ -101,6 +101,9 @@ namespace FashionWeb.Controllers
                 prod.IsNew = model.IsNew;
                 prod.Gender = collection["Gender"];
                 prod.AddedOn = DateTime.Now;
+                prod.IsSlide = model.IsSlide;
+                prod.IsFeatured = model.IsFeatured;
+                prod.AddedBy = Convert.ToInt32(PublicHelper.UserId);
                 _ps.Insert(prod);
             }
 
@@ -133,9 +136,6 @@ namespace FashionWeb.Controllers
         public ActionResult Edit(ProductViewModel model, HttpPostedFileBase image, HttpPostedFileBase image1, FormCollection collection)
         {
 
-            //var currentUser = HttpContext.User.Identity.Name;
-            //tbl_Users user = _context.tbl_Users.Where(m => m.Email == currentUser).SingleOrDefault();
-
             var p = _ps.context.tbl_Product.Where(prod => prod.ProductId == model.product.ProductId).SingleOrDefault();
 
             if (!ModelState.IsValid)
@@ -158,10 +158,6 @@ namespace FashionWeb.Controllers
                     image.SaveAs(physicalPath1);
                     p.Image = ImageName;
                 }
-                //else
-                //{
-                //    //prod.Image = model.product.Image;
-                //}
 
                 if (image1 != null)
                 {
@@ -171,11 +167,7 @@ namespace FashionWeb.Controllers
                     image1.SaveAs(physicalPath1);
                     p.Image1 = ImageName;
                 }
-                //else
-                //{
-                //    //prod.Image1 = model.product.Image1;
-                //}
-
+                
                 p.Name = model.Name;
                 p.Price = model.product.Price;
                 p.Description = model.product.Description;
@@ -184,10 +176,11 @@ namespace FashionWeb.Controllers
                 p.Discount = model.product.Discount;
                 p.IsNew = model.product.IsNew;
                 p.Gender = collection["Gender"];
-              //p.AddedOn = model.product.AddedOn;
+                p.IsFeatured = model.product.IsFeatured;
+                p.IsSlide = model.product.IsSlide;
                 p.UpdatedOn = DateTime.Now;
+                p.UpdatedBy = Convert.ToInt32(PublicHelper.UserId);
                 _ps.context.SaveChanges();
-               //_ps.Update(prod);
             }
             ProductViewModel Pvm = new ProductViewModel();
             Pvm.BrandList = new SelectList(_context.tbl_Brands.ToList(), "ID", "BrandName");

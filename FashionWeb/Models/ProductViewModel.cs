@@ -20,6 +20,8 @@ namespace FashionWeb.Models
         public Nullable<int> Price { get; set; } 
         public Nullable<int> Discount { get; set; }
         public bool IsNew { get; set; }
+        public bool IsFeatured { get; set; }
+        public bool IsSlide { get; set; }
         public string Size { get; set; }
         public string Color { get; set; }
         public string Description { get; set; }

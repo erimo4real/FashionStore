@@ -86,6 +86,9 @@
     <Compile Include="tbl_Product.cs">
       <DependentUpon>FashionModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tbl_Profile.cs">
+      <DependentUpon>FashionModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tbl_Roles.cs">
       <DependentUpon>FashionModel.tt</DependentUpon>
     </Compile>

@@ -92,16 +92,41 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group mb-4">
-                <div>
-                    <input type="file" name="image" value="Upload Image" />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        @Html.CheckBoxFor(model => model.product.IsFeatured, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "isnew" } })
+                        <label for="customCheck3">IsFeatured</label>
+                        @Html.ValidationMessageFor(model => model.product.IsFeatured, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        @Html.CheckBoxFor(model => model.product.IsSlide, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "isnew" } })
+                        <label for="customCheck3">IsSlide</label>
+                        @Html.ValidationMessageFor(model => model.product.IsSlide, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
-            <div class="form-group mb-4">
-                <div>
-                    <input type="file" name="image1" value="Upload Image" />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <div>
+                            <input type="file" name="image" value="Upload Image" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <div>
+                            <input type="file" name="image1" value="Upload Image" />
+                        </div>
+                    </div>
                 </div>
             </div>
+          
             <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">Add New Product</button>
             <p class="text-right">
                 <a href="~/Product/index" class="btn btn-bd-primary">Go Back?</a>

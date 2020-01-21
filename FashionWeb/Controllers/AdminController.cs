@@ -9,7 +9,7 @@ using FashionWeb.Models;
 
 namespace FashionWeb.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly UserServices UserS;
@@ -23,6 +23,13 @@ namespace FashionWeb.Controllers
         {
             UVM.users = UserS.GetAllUser();
             return View(UVM);
+        }
+
+        [HttpGet]
+        public ActionResult GetProfile()
+        {
+           
+            return View();
         }
 
         [HttpGet]
@@ -40,7 +47,7 @@ namespace FashionWeb.Controllers
         {
             bool Status = false;
             string message = "";
-
+            var u = UserS.context.tbl_Users.Where(m => m.ID == model.user.ID).SingleOrDefault();
             // Model Validation 
             if (ModelState.IsValid)
             {
@@ -51,29 +58,21 @@ namespace FashionWeb.Controllers
 
                     // save image in folder
                     ImageFile.SaveAs(physicalPath);
-
-                 var u =   UserS.context.tbl_Users.Where(m => m.ID == model.user.ID).SingleOrDefault();
-
-                    u.UserName = model.user.UserName;
-                    u.FirstName = model.user.FirstName;
-                    u.LastName = model.user.LastName;
-                    u.Email = model.user.Email;
-                    u.DOB = model.user.DOB;
                     u.ImageName = ImageName;
-                    u.UpdatedOn = DateTime.Now;
-                    UserS.context.SaveChanges();
 
-                    #region Save to Database
-
-                    //UserS.Update(user);
-
-                    message = "User Update successfully done.";
-                    Status = true;
                 }
-                else
-                {
-                    message = "Error while file uploading.";
-                }
+               
+                u.UserName = model.user.UserName;
+                u.FirstName = model.user.FirstName;
+                u.LastName = model.user.LastName;
+                u.Email = model.user.Email;
+                u.DOB = model.user.DOB;
+                u.UpdatedOn = DateTime.Now;
+                UserS.context.SaveChanges();
+
+                #region Save to Database
+                message = "User Update successfully done.";
+                Status = true;
                 #endregion
             }
             else
@@ -86,9 +85,9 @@ namespace FashionWeb.Controllers
             return View(model);
         }
 
+       
 
         [HttpPost]
-
         public JsonResult Delete(int id)
         {
             try

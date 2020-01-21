@@ -14,9 +14,9 @@ namespace FashionHelpers.CommonHelpers
     public class PublicHelper
     {
       
-        private readonly int _saltSize = 10;
-        private readonly int _ranNumber = 5;
-        private UserServices memberService = new UserServices();
+        private readonly static int _saltSize = 10;
+        private readonly static int _ranNumber = 5;
+        private static UserServices  memberService = new UserServices();
         public string HashPassword(string password)
         {
             string hash = string.Empty;
@@ -27,7 +27,7 @@ namespace FashionHelpers.CommonHelpers
             return hash;
         }
 
-        public string AutoGeneratePassword(out string hash)
+        public static string AutoGeneratePassword(out string hash)
         {
             var hasher = new Hasher();
             hasher.SaltSize = _saltSize;
@@ -36,7 +36,7 @@ namespace FashionHelpers.CommonHelpers
             return newPassword;
         }
 
-        public bool IsStringSameAsHash(string userPassword, string savedHash)
+        public static bool IsStringSameAsHash(string userPassword, string savedHash)
         {
             bool isSame = false;
             // hash password
@@ -87,17 +87,17 @@ namespace FashionHelpers.CommonHelpers
         {
             FormsAuthentication.SetAuthCookie(cookie, true);
         }
-        public  void Logout()
+        public static void Logout()
         {
             FormsAuthentication.SignOut();
         }
 
-        public  bool IsAuthenticated()
+        public static bool IsAuthenticated()
         {
             return GetActiveUserId > 0;
         }
 
-        public  tbl_Users GetActiveUser()
+        public static tbl_Users GetActiveUser()
         {
             if (IsAuthenticated())
             {
@@ -118,22 +118,17 @@ namespace FashionHelpers.CommonHelpers
                 string userDetails = GetUserIdentifier();
                 if (!string.IsNullOrWhiteSpace(userDetails))
                 {
-                    var userDetailsArray = userDetails.Split(',');
-                    foreach (string userDetail in userDetailsArray)
-                    {
-                        if (userDetail.IndexOf("userid") > -1)
-                        {
-                            var id = userDetail.Split('=')[1];
+                   tbl_Users currentUser = memberService.GetByEmail(userDetails);
+                    var id = currentUser.ID.ToString();
                             if (int.TryParse(id, out userId))
                                 return userId;
-                        }
-                    }
+                    
                 }
                 return userId;
             }
         }
 
-        public  string UserId
+        public static string UserId
         {
             get
             {
@@ -144,7 +139,7 @@ namespace FashionHelpers.CommonHelpers
                 return userId;
             }
         }
-        public  Guid GuidCustomerId
+        public static Guid GuidCustomerId
         {
             get
             {
@@ -180,7 +175,7 @@ namespace FashionHelpers.CommonHelpers
         }
 
 
-        public  string UserName
+        public static string UserName
         {
             get
             {

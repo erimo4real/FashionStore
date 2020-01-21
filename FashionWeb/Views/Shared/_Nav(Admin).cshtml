@@ -1,4 +1,8 @@
-﻿ 
+﻿
+
+@{
+    var profileName = FashionHelpers.CommonHelpers.PublicHelper.GetActiveUser();
+}
 <!-- begin::navbar -->
 <nav class="navbar">
 
@@ -130,25 +134,50 @@
                 <li class="user-profile dropdown">
                     <a href="#" data-toggle="dropdown">
                         <figure class="avatar avatar-state-success avatar-sm">
-                            <span class="avatar-title bg-primary rounded-circle">l</span>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <img class="rounded-circle" src="~/Passports/@profileName.ImageName" width="30" , height="30" alt="">
+                            }
+                            else
+                            {
+                                <span class="avatar-title bg-primary rounded-circle">l</span>
+                            }
                         </figure>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-menu-title">
-                            <span>Account</span>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <strong>Welcome @profileName.UserName</strong>
+                            }
+                            else
+                            {
+                                <span>Account</span>
+                            }
+
                         </div>
                         <div class="dropdown-menu-body">
                             <ul>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="~/Admin/GetProfile">
                                         <i class="icon fa fa-user-o"></i> Profile
                                     </a>
                                 </li>
                                 <li class="dropdown-divider"></li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="icon fa fa-sign-out"></i> Logout
-                                    </a>
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                        <a class="dropdown-item" href="~/Account/Logout">
+                                            <i class="icon fa fa-sign-out"></i> Logout
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="dropdown-item" href="~/Account/Register">
+                                            <i class="icon fa fa-sign-in"></i> Register
+                                        </a>
+                                    }
+
                                 </li>
                             </ul>
                         </div>
