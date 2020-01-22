@@ -178,7 +178,7 @@
                                         <!-- Product Description -->
                                         <div class="product-description">
                                             <span>@item.brand.BrandName</span>
-                                            <a href="single-product-details.html">
+                                            <a href="~/Home/SingleProductDetails?id=@item.product.ProductId">
                                                 <h6>@item.product.Description</h6>
                                             </a>
                                             <p class="product-price">$@item.product.Price</p>
@@ -187,7 +187,7 @@
                                             <div class="hover-content">
                                                 <!-- Add to Cart -->
                                                 <div class="add-to-cart-btn">
-                                                    <a href="#" class="btn essence-btn">Add to Cart</a>
+                                                    <a href="~/Shopping/AddProductToCart?productId=@item.product.ProductId" class="btn essence-btn">Add to Cart</a>
                                                 </div>
                                             </div>
                                         </div>

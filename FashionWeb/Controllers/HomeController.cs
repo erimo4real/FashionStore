@@ -2,6 +2,7 @@
 using FashionWeb.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -60,7 +61,6 @@ namespace FashionWeb.Controllers
                                 from i in table2.ToList()
                                 select new HomeViewModel
                                 {
-
                                     product = e,
                                     category = d,
                                     brand = i
@@ -75,7 +75,17 @@ namespace FashionWeb.Controllers
 
         public ActionResult SingleProductDetails(int id)
         {
-            return View();
+            var a = (from prod in _context.tbl_Product
+                     join cat in _context.tbl_Category on prod.CategoryID equals cat.CategoryId
+                     join b in _context.tbl_Brands on prod.BrandID equals b.ID
+                     where prod.ProductId == id
+                     select new HomeViewModel
+                     {
+                          product = prod,
+                          category = cat,
+                          brand = b
+                     });
+            return View(a);
         }
     }
 }
