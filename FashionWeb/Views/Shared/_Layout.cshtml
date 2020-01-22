@@ -79,19 +79,25 @@
                             </li>
                             <li><a href="~/Home/about">About us</a></li>
                             <li><a href="~/Home/Contact">Contact</a></li>
-                        </ul>
-                        @if (Request.IsAuthenticated)
-                        {
-                            <strong>@userName</strong>
-                            @Html.ActionLink("Sign Out", "Logout", "Account")
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Register", "Register", "Account")
-                            <span> | </span>
-                            @Html.ActionLink("Sign In", "Login", "Account")
-                        }
-
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li>
+                                    <strong> @userName</strong>
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Sign Out", "Logout", "Account")
+                                </li>
+                                }
+                                else
+                                {
+                                <li>
+                                    @Html.ActionLink("Register", "Register", "Account")
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Sign In", "Login", "Account")
+                                </li>
+                                }
+                            </ul>
                     </div>
                     <!-- Nav End -->
                 </div>
