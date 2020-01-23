@@ -1,4 +1,5 @@
 ﻿using FashionDb;
+using FashionHelpers.CommonHelpers;
 using FashionWeb.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 
 namespace FashionWeb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ShoppingController : Controller
     {
         public FashionAppDBEntities _context;
@@ -23,20 +24,22 @@ namespace FashionWeb.Controllers
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
-        public ActionResult AddProductToCart(int productId)
+        public ActionResult AddProductToCart(HomeViewModel Model, FormCollection collection)
         {
-           
-
+            var productId = Convert.ToInt32(collection["userid"]);  
             Tbl_Cart c = new Tbl_Cart();
             c.AddedOn = DateTime.Now;
             c.CartStatusId = 1;
-            //c.MemberId = memberId;
+            c.UserId = Convert.ToInt32(PublicHelper.UserId);
             c.ProductId = productId;
+            c.Size = collection["selectsize"];
+            c.Color = collection["selectcolor"];
             c.UpdatedOn = DateTime.Now;
-            _context.Tbl_Cart.Add(c);
-            _context.SaveChanges();
+          //  _context.Tbl_Cart.Add(c);
+          //  _context.SaveChanges();
             TempData["ProductAddedToCart"] = "Product added to cart successfully";
-            return RedirectToAction("Index", "Search");
+            TempData["Status"] = true;
+            return RedirectToAction("Index", "Home" , new { prodId = productId });
         }
 
         /// <summary>

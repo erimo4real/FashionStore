@@ -31,6 +31,7 @@ namespace FashionWeb.Models
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> AddedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public string Type { get; set; }
         public SelectList BrandList { get; set; }
         public string SelectedBrand { get; set; }
         public SelectList CategoryList { get; set; }

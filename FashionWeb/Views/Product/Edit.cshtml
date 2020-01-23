@@ -109,7 +109,19 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        @Html.EditorFor(model => model.product.Type, new { htmlAttributes = new { @class = "form-control form-control-xl", placeholder = "product type" } })
+                        @Html.ValidationMessageFor(model => model.product.Type, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
 
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group mb-4">
@@ -126,7 +138,7 @@
                     </div>
                 </div>
             </div>
-          
+
             <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">Add New Product</button>
             <p class="text-right">
                 <a href="~/Product/index" class="btn btn-bd-primary">Go Back?</a>

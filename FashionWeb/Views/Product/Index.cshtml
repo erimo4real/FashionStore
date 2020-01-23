@@ -94,6 +94,7 @@
 				<tr>
 					<th>#</th>
 					<th>product Name</th>
+					<th>product type</th>
 					<th>Category Name</th>
 					<th>Brand Name</th>
 					<th>Price</th>
@@ -104,10 +105,11 @@
 			</thead>
 			<tbody>
 				@foreach (var item in Model)
-								{
+			{
 				<tr>
 					<td>@item.product.ProductId</td>
 					<td>@item.product.Name</td>
+					<th>@item.product.Type</th>
 					<td>@item.category.CategoryName</td>
 					<td>@item.brand.BrandName</td>
 					<td>@item.product.Price</td>
@@ -124,6 +126,7 @@
 				<tr>
 					<th>#</th>
 					<th>product Name</th>
+					<th>product type</th>
 					<th>Category Name</th>
 					<th>Brand Name</th>
 					<th>Price</th>

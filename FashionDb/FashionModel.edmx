@@ -19,6 +19,8 @@
           <Property Name="CartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="int" />
           <Property Name="UserId" Type="int" />
+          <Property Name="Color" Type="varchar" MaxLength="100" />
+          <Property Name="Size" Type="varchar" MaxLength="100" />
           <Property Name="CartStatusId" Type="int" />
           <Property Name="AddedOn" Type="datetime" />
           <Property Name="UpdatedOn" Type="datetime" />
@@ -69,6 +71,7 @@
           <Property Name="Color" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar" MaxLength="250" />
           <Property Name="BrandID" Type="int" />
+          <Property Name="Type" Type="varchar" MaxLength="150" />
           <Property Name="CategoryID" Type="int" />
           <Property Name="AddedBy" Type="int" />
           <Property Name="UpdatedBy" Type="int" />
@@ -207,6 +210,7 @@
           <Property Name="UpdatedOn" Precision="3" Type="DateTime" />
           <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
           <Property Name="IsSlide" Type="Boolean" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_Users">
           <Key>
@@ -242,6 +246,8 @@
           <Property Name="AddedOn" Type="DateTime" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
           <Property Name="ShippingDetailId" Type="Int32" />
+          <Property Name="Color" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tbl_CartStatus">
           <Key>
@@ -326,6 +332,7 @@
           <EntitySetMapping Name="tbl_Product">
             <EntityTypeMapping TypeName="FashionAppDBModel.tbl_Product">
               <MappingFragment StoreEntitySet="tbl_Product">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="IsSlide" ColumnName="IsSlide" />
                 <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
@@ -376,6 +383,8 @@
           <EntitySetMapping Name="Tbl_Cart">
             <EntityTypeMapping TypeName="FashionAppDBModel.Tbl_Cart">
               <MappingFragment StoreEntitySet="Tbl_Cart">
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="ShippingDetailId" ColumnName="ShippingDetailId" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />

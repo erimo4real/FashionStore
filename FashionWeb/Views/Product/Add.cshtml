@@ -106,7 +106,19 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control form-control-xl", placeholder = "product type" } })
+                            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                           
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-4">
@@ -118,7 +130,7 @@
                     <div class="col-md-6">
                         <div class="form-group mb-4">
                             <div>
-                                <input type="file" name="image1" value="" required />
+                                <input type="file" name="image1" value="" />
                             </div>
                         </div>
                     </div>

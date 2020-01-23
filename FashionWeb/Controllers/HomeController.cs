@@ -13,7 +13,7 @@ namespace FashionWeb.Controllers
     public class HomeController : Controller
     {
         public FashionAppDBEntities _context = new FashionAppDBEntities();
-        public ActionResult Index()
+        public ActionResult Index(int prodId = 0)
         {
             List<tbl_Product> products = _context.tbl_Product.ToList();
             List<tbl_Category> categories = _context.tbl_Category.ToList();
@@ -31,6 +31,8 @@ namespace FashionWeb.Controllers
                                     category = d,
                                     brand = i
                                 };
+            ViewBag.Message = TempData["ProductAddedToCart"];
+            ViewBag.Status = TempData["Status"];
             return View(productRecord);
         }
         
@@ -50,6 +52,7 @@ namespace FashionWeb.Controllers
         public ActionResult Shop()
         {
             ViewBag.brands = _context.tbl_Brands.ToList();
+            ViewBag.Category = _context.tbl_Category.ToList();
             List<tbl_Product> products = _context.tbl_Product.ToList();
             List<tbl_Category> categories = _context.tbl_Category.ToList();
             List<tbl_Brands> brands = _context.tbl_Brands.ToList();

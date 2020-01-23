@@ -12,7 +12,7 @@
                 <div class="product_thumbnail_slides owl-carousel">
                     <img src="~/ProductImage/@item.product.Image" alt="">
                     <img src="~/ProductImage/@item.product.Image1" alt="">
-                    <img src="~/ProductImage/@item.product.Image3" alt="">
+                    @*<img src="~/ProductImage/@item.product.Image3" alt="">*@
                 </div>
             </div>
         }
@@ -20,42 +20,44 @@
         <!-- Single Product Description -->
         @foreach (var item in Model)
         {
-            <div class="single_product_desc clearfix">
-                <span>@item.brand.BrandName</span>
-                <a href="cart.html">
-                    <h2>@item.product.Description</h2>
-                </a>
-                <p class="product-price"><span class="old-price">$65.00</span> $49.00</p>
-                <p class="product-desc">@item.product.Description .</p>
+    <div class="single_product_desc clearfix">
+        <span>@item.brand.BrandName</span>
+        <a href="cart.html">
+            <h2>@item.product.Description</h2>
+        </a>
+        <p class="product-price"><span class="old-price">$65.00</span> $49.00</p>
+        <p class="product-desc">@item.product.Description .</p>
 
-                <!-- Form -->
-                <form class="cart-form clearfix" method="post">
-                    <!-- Select Box -->
-                    <div class="select-box d-flex mt-50 mb-30">
-                        <select name="select" id="productSize" class="mr-5">
-                            <option value="value">Size: XL</option>
-                            <option value="value">Size: X</option>
-                            <option value="value">Size: M</option>
-                            <option value="value">Size: S</option>
-                        </select>
-                        <select name="select" id="productColor">
-                            <option value="value">Color: Black</option>
-                            <option value="value">Color: White</option>
-                            <option value="value">Color: Red</option>
-                            <option value="value">Color: Purple</option>
-                        </select>
+        <!-- Form -->
+        @using (Html.BeginForm("AddProductToCart", "Shopping", FormMethod.Post))
+        {
+                <input type="hidden" name="userid" value="@item.product.ProductId" />
+                <!-- Select Box --> 
+                <div class="select-box d-flex mt-50 mb-30">
+                    <select name="selectsize" id="productSize" class="mr-5">
+                        <option>Size: XL</option>
+                        <option>Size: X</option>
+                        <option>Size: M</option>
+                        <option>Size: S</option>
+                    </select>
+                    <select name="selectcolor" id="productColor">
+                        <option>Color: Black</option>
+                        <option>Color: White</option>
+                        <option>Color: Red</option>
+                        <option>Color: Purple</option>
+                    </select>
+                </div>
+                <!-- Cart & Favourite Box -->
+                <div class="cart-fav-box d-flex align-items-center">
+                    <!-- Cart -->
+                    <button type="submit" name="addtocart" value="5" class="btn essence-btn">Add to cart</button>
+                    <!-- Favourite -->
+                    <div class="product-favourite ml-4">
+                        <a href="#" class="favme fa fa-heart"></a>
                     </div>
-                    <!-- Cart & Favourite Box -->
-                    <div class="cart-fav-box d-flex align-items-center">
-                        <!-- Cart -->
-                        <button type="submit" name="addtocart" value="5" class="btn essence-btn">Add to cart</button>
-                        <!-- Favourite -->
-                        <div class="product-favourite ml-4">
-                            <a href="~/Shopping/AddProductToCart?productId=@item.product.ProductId" class="favme fa fa-heart"></a>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+        }
+        </div>
         }
         </section>
 <!-- ##### Single Product Details Area End ##### -->

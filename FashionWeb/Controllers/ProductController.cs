@@ -103,6 +103,7 @@ namespace FashionWeb.Controllers
                 prod.AddedOn = DateTime.Now;
                 prod.IsSlide = model.IsSlide;
                 prod.IsFeatured = model.IsFeatured;
+                prod.Type = model.Type;
                 prod.AddedBy = Convert.ToInt32(PublicHelper.UserId);
                 _ps.Insert(prod);
             }
@@ -179,6 +180,7 @@ namespace FashionWeb.Controllers
                 p.IsFeatured = model.product.IsFeatured;
                 p.IsSlide = model.product.IsSlide;
                 p.UpdatedOn = DateTime.Now;
+                p.Type = model.product.Type;
                 p.UpdatedBy = Convert.ToInt32(PublicHelper.UserId);
                 _ps.context.SaveChanges();
             }

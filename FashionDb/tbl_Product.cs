@@ -34,5 +34,6 @@ namespace FashionDb
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public bool IsFeatured { get; set; }
         public bool IsSlide { get; set; }
+        public string Type { get; set; }
     }
 }

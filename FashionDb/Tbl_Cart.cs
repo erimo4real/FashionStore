@@ -21,5 +21,7 @@ namespace FashionDb
         public Nullable<System.DateTime> AddedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public Nullable<int> ShippingDetailId { get; set; }
+        public string Color { get; set; }
+        public string Size { get; set; }
     }
 }
