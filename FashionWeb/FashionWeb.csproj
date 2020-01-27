@@ -288,6 +288,7 @@
     <Content Include="Content\Essence\img\core-img\logo2.png" />
     <Content Include="Content\Essence\img\core-img\long-arrow-left.svg" />
     <Content Include="Content\Essence\img\core-img\long-arrow-right.svg" />
+    <Content Include="Content\Essence\img\core-img\noimage.jpg" />
     <Content Include="Content\Essence\img\core-img\pin.png" />
     <Content Include="Content\Essence\img\core-img\search.svg" />
     <Content Include="Content\Essence\img\core-img\user.svg" />
@@ -316,6 +317,7 @@
     <Content Include="Content\Slide-bootstrap.min.css" />
     <Content Include="Content\Slide-bootstrap.min.js" />
     <Content Include="Content\slide.css" />
+    <Content Include="Content\sweetalert.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

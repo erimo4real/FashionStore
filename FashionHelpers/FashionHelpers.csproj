@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonHelpers\CartPublicHelper.cs" />
+    <Compile Include="CommonHelpers\ProductPublicHelper.cs" />
     <Compile Include="CommonHelpers\PublicHelper.cs" />
     <Compile Include="HelperServices\CategorySerivce.cs" />
     <Compile Include="HelperServices\ProductService.cs" />

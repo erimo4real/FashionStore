@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using X.PagedList;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,7 +14,13 @@ namespace FashionWeb.Controllers
     public class HomeController : Controller
     {
         public FashionAppDBEntities _context = new FashionAppDBEntities();
-        public ActionResult Index(int prodId = 0)
+        private const int _pageSize = 2;
+
+        public JsonResult Addart()
+        {
+            return Json( "ADD",JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Index()
         {
             List<tbl_Product> products = _context.tbl_Product.ToList();
             List<tbl_Category> categories = _context.tbl_Category.ToList();
@@ -49,7 +56,7 @@ namespace FashionWeb.Controllers
             return View();
         }
 
-        public ActionResult Shop()
+        public ActionResult Shop(int page = 1)
         {
             ViewBag.brands = _context.tbl_Brands.ToList();
             ViewBag.Category = _context.tbl_Category.ToList();
@@ -68,6 +75,7 @@ namespace FashionWeb.Controllers
                                     category = d,
                                     brand = i
                                 };
+            ViewBag.ResultsPage = productRecord.ToPagedList(page, _pageSize);
             return View(productRecord);
         }
 

@@ -20,7 +20,7 @@
         <!-- Single Product Description -->
         @foreach (var item in Model)
         {
-    <div class="single_product_desc clearfix">
+           <div class="single_product_desc clearfix">
         <span>@item.brand.BrandName</span>
         <a href="cart.html">
             <h2>@item.product.Description</h2>
@@ -53,7 +53,7 @@
                     <button type="submit" name="addtocart" value="5" class="btn essence-btn">Add to cart</button>
                     <!-- Favourite -->
                     <div class="product-favourite ml-4">
-                        <a href="#" class="favme fa fa-heart"></a>
+                        <a href="~/Home/Shop" class="favme fa fa-backward"></a>
                     </div>
                 </div>
         }
