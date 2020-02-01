@@ -35,5 +35,6 @@ namespace FashionDb
         public virtual DbSet<Tbl_Roles> Tbl_Roles { get; set; }
         public virtual DbSet<Tbl_ShippingDetails> Tbl_ShippingDetails { get; set; }
         public virtual DbSet<Tbl_Profile> Tbl_Profile { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
     }
 }

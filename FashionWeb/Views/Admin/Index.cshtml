@@ -53,7 +53,9 @@
             <tbody>
                 @foreach (var item in Model.users)
                 {
-                    <tr>
+                <tr>
+                    @if (item.isAdmin == true )
+                    {
                         <td></td>
                         <td>@item.UserName</td>
                         <td>@item.FirstName</td>
@@ -65,7 +67,8 @@
                             <a href="~/Admin/Edit?id=@item.ID" class="btn btn-bd-primary">Edit</a>
                             <button id="link" onclick="Delete(@item.ID)" class="btn btn-bd-primary">Delete</button>
                         </td>
-                    </tr>
+                    }
+                </tr>
                 }
             </tbody>
             <tfoot>

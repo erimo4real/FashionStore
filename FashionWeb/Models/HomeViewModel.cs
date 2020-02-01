@@ -13,5 +13,6 @@ namespace FashionWeb.Models
         public tbl_Brands brand { get; set; }
 
         public CartViewModel cartViewModel { get; set; }
+      
     }
 }

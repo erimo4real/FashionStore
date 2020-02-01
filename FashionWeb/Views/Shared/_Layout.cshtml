@@ -2,7 +2,9 @@
 
 @{
     var userName = FashionHelpers.CommonHelpers.PublicHelper.UserName;
-    var cart = FashionHelpers.CommonHelpers.CartPublicHelper.GetActiveCartlist();
+    var carts = FashionHelpers.CommonHelpers.CartPublicHelper.CartList();
+    var cartlist = FashionHelpers.CommonHelpers.CartPublicHelper.Carts();
+   
 }
 
 <!DOCTYPE html>
@@ -20,7 +22,6 @@
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="~/Content/Essence/css/core-style.css">
     <link rel="stylesheet" href="~/Content/Essence/style.css">
-
 </head>
 
 <body>
@@ -86,17 +87,17 @@
                                 <li>
                                     @Html.ActionLink("Sign Out", "Logout", "Account")
                                 </li>
-                                }
-                                else
-                                {
+                            }
+                            else
+                            {
                                 <li>
                                     @Html.ActionLink("Register", "Register", "Account")
                                 </li>
                                 <li>
                                     @Html.ActionLink("Sign In", "Login", "Account")
                                 </li>
-                                }
-                            </ul>
+                            }
+                        </ul>
                     </div>
                     <!-- Nav End -->
                 </div>
@@ -106,7 +107,7 @@
             <div class="header-meta d-flex clearfix justify-content-end">
                 <!-- Search Area -->
                 <div class="search-area">
-                    <form action="#" method="post">
+                    <form action="~/Home/search" method="post">
                         <input type="search" name="search" id="headerSearch" placeholder="Type for search">
                         <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </form>
@@ -121,7 +122,14 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="~/Content/Essence/img/core-img/bag.svg" alt=""> <span>3</span></a>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <a href="#" id="essenceCartBtn"><img src="~/Content/Essence/img/core-img/bag.svg" alt=""> <span>@cartlist.Count()</span></a>
+                    }
+                    else
+                    {
+                        <a href="#" id="essenceCartBtn"><img src="~/Content/Essence/img/core-img/bag.svg" alt=""> <span>0</span></a>
+                    }
                 </div>
             </div>
 
@@ -132,46 +140,64 @@
     <div class="cart-bg-overlay"></div>
 
     <div class="right-side-cart-area">
+        @if (Request.IsAuthenticated)
+        {
+            <!-- Cart Button -->
+            <div class="cart-button">
+                <a href="#" id="rightSideCart"><img src="../Content/Essence/img/core-img/bag.svg" alt=""> <span>@cartlist.Count()</span></a>
+            </div>
+        }
+        else
+        {
+            <!-- Cart Button -->
+            <div class="cart-button">
+                <a href="#" id="rightSideCart"><img src="../Content/Essence/img/core-img/bag.svg" alt=""> <span>0</span></a>
+            </div>
+        }
 
-        <!-- Cart Button -->
-
-        <div class="cart-button">
-            <a href="#" id="rightSideCart"><img src="~/Content/Essence/img/core-img/bag.svg" alt=""> <span>8</span></a>
-        </div>
 
         @if (Request.IsAuthenticated)
         {
             <div class="cart-content d-flex">
-
+                
                 <!-- Cart List Area -->
-
                 <div class="cart-list">
-                    <!-- Single Cart Item -->
-                    <div class="single-cart-item">
-                        <a href="#" class="product-image">
-                            <img src="~/Content/Essence/img/product-img/product-1.jpg" class="cart-thumb" alt="">
-                            <!-- Cart Item Desc -->
-                            <div class="cart-item-desc">
-                                <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                                <span class="badge">Mango</span>
-                                <h6>Button Through Strap Mini Dress</h6>
-                                <p class="size">Size: S</p>
-                                <p class="color">Color: Red</p>
-                                <p class="price">$45.00</p>
-                            </div>
-                        </a>
+                    @foreach (var item in cartlist)
+                    {
+                        <!-- Single Cart Item -->
+                    <div class="single-cart-item" style="margin-top:10px;">
+                        @if (@item.c.CartStatusId == 1)
+                        {
+                            <a href="#" class="product-image">
+                                <img src="~/ProductImage/@item.p.Image" class="cart-thumb" alt="">
+                                <!-- Cart Item Desc -->
+                                <div class="cart-item-desc">
+                                    <span class="product-remove" onclick="Remove(@item.c.CartId)"><i class="fa fa-close" aria-hidden="true"></i></span>
+                                    @*<span class="badge">@item.</span>*@
+                                    <h6>@item.p.Description</h6>
+                                    <p class="size">Size: @item.c.Size</p>
+                                    <p class="color">Color: @item.c.Color</p>
+                                    <p class="price">$@item.p.Price</p>
+                                </div>
+                            </a>
+                        }
                     </div>
+                    }
+
                 </div>
 
                 <!-- Cart Summary -->
                 <div class="cart-amount-summary">
-
+                    @{ 
+                         var totalDiscount = cartlist.Sum(s => s.p.Discount);
+                         var totalPrice = cartlist.Sum(s => s.p.Price);
+                    }
                     <h2>Summary</h2>
                     <ul class="summary-table">
-                        <li><span>subtotal:</span> <span>$274.00</span></li>
+                        <li><span>subtotal:</span> <span>$@totalPrice</span></li>
                         <li><span>delivery:</span> <span>Free</span></li>
-                        <li><span>discount:</span> <span>-15%</span></li>
-                        <li><span>total:</span> <span>$232.00</span></li>
+                        <li><span>discount:</span> <span>-@totalDiscount%</span></li>
+                        <li><span>total:</span> <span>$@totalPrice</span></li>
                     </ul>
                     <div class="checkout-btn mt-100">
                         <a href="checkout.html" class="btn essence-btn">check out</a>
@@ -179,12 +205,12 @@
                 </div>
             </div>
         }
-        else
+
+        @if (!Request.IsAuthenticated)
         {
             <div class="cart-content d-flex">
 
                 <!-- Cart List Area -->
-
                 <div class="cart-list">
                     <!-- Single Cart Item -->
                     <div class="single-cart-item">
@@ -207,20 +233,19 @@
                 <div class="cart-amount-summary">
 
                     <h2>Summary</h2>
+                    <h3 style="margin-bottom:60px;">No Item in your cart !</h3>
                     <ul class="summary-table">
-                        <li><span>subtotal:</span> <span>$00.00</span></li>
-                        <li><span>delivery:</span> <span>Unavaliale</span></li>
+                        <li><span>subtotal:</span> <span>$000.00</span></li>
+                        <li><span>delivery:</span> <span>Unavaliable</span></li>
                         <li><span>discount:</span> <span>-00%</span></li>
                         <li><span>total:</span> <span>$000.00</span></li>
                     </ul>
-                    <div class="checkout-btn mt-100">
-                        <a href="checkout.html" class="btn essence-btn">check out</a>
-                    </div>
                 </div>
             </div>
         }
     </div>
     <!-- ##### Right Side Cart End ##### -->
+
 
     @RenderBody()
 
@@ -303,8 +328,87 @@
         </div>
     </footer>
     <!-- ##### Footer Area End ##### -->
+
+    <script src="~/Content/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        function Remove(clientId) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deletd , you will not be able to recover your Item!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            type: "POST",
+                            data: {
+                                id: clientId
+                            },
+                            url: "/Home/Remove",
+                            dataType: "json",
+                            success: function (response) {
+                                swal("Poof! that Your Item has been deleted!", {
+                                    icon: "success",
+                                }).then(function () {
+                                    window.location.href = "/Home/Index"
+                                });
+
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+
+                    }
+                    else {
+                        swal("Your item is safe!");
+                    }
+                });
+        }
+                //function Remove() {
+                //    swal({
+                //        title: "Are you sure?",
+                //        text: "Once you remove it from your cart list you will not get back!",
+                //        icon: "warning",
+                //        buttons: true,
+                //        dangerMode: true,
+                //    })
+                //        .then((willAdd) => {
+                //            if (willAdd) {
+                //                $.ajax({
+                //                    type: "GET",
+                //                    url: "/Home/Remove",
+                //                    contentType: "application/json; charset=utf-8",
+                //                    dataType: "json",
+                //                    success: function (response) {
+                //                        swal("Poof! Your Item has been deleted!", {
+                //                            icon: "success",
+                //                        }).then(function () {
+                //                            window.location.href = "/Home/Index"
+                //                        });
+                //                    },
+                //                    failure: function (response) {
+                //                        alert(response.responseText);
+                //                    },
+                //                    error: function (response) {
+                //                        alert(response.responseText);
+                //                    }
+                //                });
+                //            }
+                //            else {
+                //                swal("You said NO !");
+                //            }
+                //        });
+                //}
+    </script>
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="~/Content/Essence/js/jquery/jquery-2.2.4.min.js"></script>
+
     <!-- Popper js -->
     <script src="~/Content/Essence/js/popper.min.js"></script>
     <!-- Bootstrap js -->
@@ -320,7 +424,6 @@
     <script src="js/map-active.js"></script>
 
 </body>
-
 </html>
 
 

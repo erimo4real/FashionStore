@@ -24,6 +24,7 @@ namespace FashionWeb.Controllers
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
+     
         public ActionResult AddProductToCart(HomeViewModel Model, FormCollection collection)
         {
             var productId = Convert.ToInt32(collection["userid"]);  
@@ -35,8 +36,8 @@ namespace FashionWeb.Controllers
             c.Size = collection["selectsize"];
             c.Color = collection["selectcolor"];
             c.UpdatedOn = DateTime.Now;
-          //  _context.Tbl_Cart.Add(c);
-          //  _context.SaveChanges();
+            _context.Tbl_Cart.Add(c);
+            _context.SaveChanges();
             TempData["ProductAddedToCart"] = "Product added to cart successfully";
             TempData["Status"] = true;
             return RedirectToAction("Index", "Home" , new { prodId = productId });
