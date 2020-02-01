@@ -1,0 +1,45 @@
+﻿@model IEnumerable<FashionWeb.Models.HomeViewModel>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Pls Pick your size and color</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("AddProductToCart", "Shopping", FormMethod.Post))
+            {
+
+                <div class="modal-body">
+                    <input type="text" id="pinpoint" name="userid" value="" />
+                    <!-- Select Box -->
+                    <div class="select-box d-flex mt-50 mb-30">
+                        <select name="selectsize" id="productSize" class="mr-5">
+                            <option>Size: XL</option>
+                            <option>Size: X</option>
+                            <option>Size: M</option>
+                            <option>Size: S</option>
+                        </select>
+                        <select name="selectcolor" id="productColor">
+                            <option>Color: Black</option>
+                            <option>Color: White</option>
+                            <option>Color: Red</option>
+                            <option>Color: Purple</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="cart-fav-box d-flex align-items-center">
+                        <!-- Cart -->
+                        <button type="submit" name="addtocart" value="5" class="btn essence-btn">Add to cart</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

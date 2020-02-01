@@ -4,7 +4,11 @@
 
 @{
     ViewBag.Title = "Shop";
+
 }
+
+<!-- jQuery (Necessary for All JavaScript Plugins) -->
+<script src="~/Content/Essence/js/jquery/jquery-2.2.4.min.js"></script>
 
 <!-- ##### Breadcumb Area Start ##### -->
 <div class="breadcumb_area bg-img" style="background-image: url(../Content/Essence/img/bg-img/breadcumb.jpg);">
@@ -27,26 +31,58 @@
                 <div class="shop_sidebar_area">
 
                     <!-- ##### Single Widget ##### -->
+                  
                     <div class="widget catagory mb-50">
                         <!-- Widget Title -->
                         <h6 class="widget-title mb-30">Catagories</h6>
 
                         <!--  Catagories  -->
                         <div class="catagories-menu">
-                            @foreach (var item in Model)
-                            {
-                                <ul id="menu-content2" class="menu-content collapse show">
-                                    <!-- Single Item -->
-                                    <li data-toggle="collapse" data-target="#clothing">
-                                        <a href="#">@item.category.CategoryName</a>
-                                        <ul class="sub-menu collapse show" id="clothing">
-                                            <li><a href="#">@item.product.Type</a></li>
+                            <ul id="menu-content2" class="menu-content collapse show">
+                                <!-- Single Item -->
+
+                                <li data-toggle="collapse" data-target="#clothing">
+                                    <a href="#">clothing</a>
+                                    @foreach (var item in Model)
+                                    {
+                                            <ul class="sub-menu collapse show" id="clothing">
+                                                  @if(item.category.CategoryName == "CLOTHING")
+                                                      {
+                                                            <li><a href="#">@item.product.Name</a></li>
+                                                      }
+                                            </ul>
+                                    }
+                                </li>
+                                <!-- Single Item -->
+                                <li data-toggle="collapse" data-target="#shoes" class="collapsed">
+                                    <a href="#">shoes</a>
+                                    @foreach (var shose in Model)
+                                    {
+                                        <ul class="sub-menu collapse" id="shoes">
+                                            @if (shose.category.CategoryName == "SHOES")
+                                            {
+                                                <li><a href="#">@shose.product.Name</a></li>
+                                            }
                                         </ul>
-                                    </li>
-                                </ul>
-                            }
+                                    }
+                                </li>
+                                <!-- Single Item -->
+                                <li data-toggle="collapse" data-target="#accessories" class="collapsed">
+                                    <a href="#">accessories</a>
+                                    @foreach (var access in Model)
+                                    {
+                                        <ul class="sub-menu collapse" id="accessories">
+                                            @if (access.category.CategoryName == "ACCESSORIES")
+                                            {
+                                                <li><a href="#">@access.product.Name</a></li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            </ul>
                         </div>
                     </div>
+
 
                     <!-- ##### Single Widget ##### -->
                     <div class="widget price mb-50">
@@ -100,8 +136,7 @@
                                         <select name="select" id="sortByselect">
                                             <option value="value">Highest Rated</option>
                                             <option value="value">Newest</option>
-                                            <option value="value">Price: $$ - $</option>
-                                            <option value="value">Price: $ - $$</option>
+                                            <option value="value">Oldest</option>
                                         </select>
                                         <input type="submit" class="d-none" value="">
                                     </form>
@@ -117,6 +152,8 @@
                             <div class="col-12 col-sm-6 col-lg-4">
                                 <div class="single-product-wrapper">
                                     <!-- Product Image -->
+                                    <input type="hidden" id="point" name="userID" value="@item.product.ProductId" />
+                                    @*@Html.Partial("_PartialPopup" )*@
                                     <div class="product-img">
                                         <img src="~/ProductImage/@item.product.Image" alt="">
                                         <!-- Hover Thumb -->
@@ -144,10 +181,137 @@
                                         <div class="hover-content">
                                             <!-- Add to Cart -->
                                             <div class="add-to-cart-btn">
-                                                <button class="btn essence-btn" onclick="AddCart()">Add to Cart</button>
+                                                <button id="add-to-cart-@item.product.ProductId" class="btn essence-btn" onclicks="AddCart">Add to Cart</button>
                                                 @*<a href="~/Shopping/AddProductToCart?productId=@item.product.ProductId" class="btn essence-btn">Add to Cart</a>*@
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script type="text/javascript">
+
+                                $("#add-to-cart-@item.product.ProductId").on("click", function () {
+
+                                    swal({
+                                        title: "Do You want to Add to carts?",
+                                        text: "Once Added, you can still remove it from your cart list!",
+                                        icon: "warning",
+                                        buttons: true,
+                                        dangerMode: true,
+                                    })
+                                        .then((willAdd) => {
+                                            if (willAdd) {
+                                                $.ajax({
+                                                    type: "GET",
+                                                    url: "/Home/Addart",
+                                                    contentType: "application/json; charset=utf-8",
+                                                    dataType: "json",
+                                                    success: function (response) {
+
+                                                        $('#exampleModal-@item.product.ProductId').modal('show');
+
+                                                        //swal("Poof! Your profile has been deleted!", {
+                                                        //    icon: "success",
+                                                        //}).then(function () {
+                                                        //    window.location.href = "/Home/Index"
+                                                        //});
+                                                    },
+                                                    failure: function (response) {
+                                                        alert(response.responseText);
+                                                    },
+                                                    error: function (response) {
+                                                        alert(response.responseText);
+                                                    }
+                                                });
+                                            }
+                                            else {
+                                                swal("You said NO !");
+                                            }
+                                        });
+
+                                });
+
+                                @*function AddCart() {
+                                    swal({
+                                        title: "Do You want to Add to carts?",
+                                        text: "Once Added, you can still remove it from your cart list!",
+                                        icon: "warning",
+                                        buttons: true,
+                                        dangerMode: true,
+                                    })
+                                        .then((willAdd) => {
+                                            if (willAdd) {
+                                                $.ajax({
+                                                    type: "GET",
+                                                    url: "/Home/Addart",
+                                                    contentType: "application/json; charset=utf-8",
+                                                    dataType: "json",
+                                                    success: function (response) {
+
+                                                        $('#exampleModal-@item.product.ProductId').modal('show');
+
+                                                        //swal("Poof! Your profile has been deleted!", {
+                                                        //    icon: "success",
+                                                        //}).then(function () {
+                                                        //    window.location.href = "/Home/Index"
+                                                        //});
+                                                    },
+                                                    failure: function (response) {
+                                                        alert(response.responseText);
+                                                    },
+                                                    error: function (response) {
+                                                        alert(response.responseText);
+                                                    }
+                                                });
+                                            }
+                                            else {
+                                                swal("You said NO !");
+                                            }
+                                        });
+                                }*@
+
+                            </script>
+
+                            <div class="modal fade" id="exampleModal-@item.product.ProductId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Pls Pick your size and color</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        @using (Html.BeginForm("AddProductToCart", "Shopping", FormMethod.Post))
+                                        {
+
+                                            <div class="modal-body">
+                                                <input type="text" id="pinpoint" name="userid" value="@item.product.ProductId" />
+                                                <!-- Select Box -->
+                                                <div class="select-box d-flex mt-50 mb-30">
+                                                    <select name="selectsize" id="productSize" class="mr-5">
+                                                        <option>Size: XL</option>
+                                                        <option>Size: X</option>
+                                                        <option>Size: M</option>
+                                                        <option>Size: S</option>
+                                                    </select>
+                                                    <select name="selectcolor" id="productColor">
+                                                        <option>Color: Black</option>
+                                                        <option>Color: White</option>
+                                                        <option>Color: Red</option>
+                                                        <option>Color: Purple</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="cart-fav-box d-flex align-items-center">
+                                                    <!-- Cart -->
+                                                    <button type="submit" name="addtocart" value="5" class="btn essence-btn">Add to cart</button>
+                                                </div>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -178,54 +342,9 @@
 </section>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Pls Pick your size and color</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    @using (Html.BeginForm("AddProductToCart", "Shopping", FormMethod.Post))
-                    {
-
-                        <input type="hidden" name="userid" value="item.product.ProductId" />
-                        <!-- Select Box -->
-                        <div class="select-box d-flex mt-50 mb-30">
-                            <select name="selectsize" id="productSize" class="mr-5">
-                                <option>Size: XL</option>
-                                <option>Size: X</option>
-                                <option>Size: M</option>
-                                <option>Size: S</option>
-                            </select>
-                            <select name="selectcolor" id="productColor">
-                                <option>Color: Black</option>
-                                <option>Color: White</option>
-                                <option>Color: Red</option>
-                                <option>Color: Purple</option>
-                            </select>
-                        </div>
-                        <!-- Cart & Favourite Box -->
-                        <div class="cart-fav-box d-flex align-items-center">
-                            <!-- Cart -->
-                            <button type="submit" name="addtocart" value="5" class="btn essence-btn">Add to cart</button> 
-                        </div>
-                    }
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
- @*Trigger the modal with a button*@
+@*Trigger the modal with a button*@
 @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -278,47 +397,7 @@
 </div>
 
 <script src="~/Content/sweetalert.min.js"></script>
-<script type="text/javascript">
-    function AddCart() {
-        swal({
-            title: "Do You want to Add to carts?",
-            text: "Once Added, you can still remove it from your cart list!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willAdd) => {
-                if (willAdd) {
-                    $.ajax({
-                        type: "GET",
-                        url: "/Home/Addart",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (response) {
 
-                            $('#exampleModal').modal('show');
-
-                            //swal("Poof! Your profile has been deleted!", {
-                            //    icon: "success",
-                            //}).then(function () {
-                            //    window.location.href = "/Home/Index"
-                            //});
-                        },
-                        failure: function (response) {
-                            alert(response.responseText);
-                        },
-                        error: function (response) {
-                            alert(response.responseText);
-                        }
-                    });
-                }
-                else {
-                    swal("You said NO !");
-                }
-            });
-    }
-
-</script>
 
 
 

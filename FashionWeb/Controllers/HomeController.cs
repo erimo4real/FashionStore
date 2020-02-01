@@ -7,6 +7,7 @@ using System.Linq;
 using X.PagedList;
 using System.Web;
 using System.Web.Mvc;
+using FashionHelpers.HelperServices;
 
 namespace FashionWeb.Controllers
 {
@@ -15,11 +16,15 @@ namespace FashionWeb.Controllers
     {
         public FashionAppDBEntities _context = new FashionAppDBEntities();
         private const int _pageSize = 2;
+        private CartService cart = new CartService();
 
-        public JsonResult Addart()
+        public ActionResult search(FormCollection collection)
         {
-            return Json( "ADD",JsonRequestBehavior.AllowGet);
+            var search = collection["search"];
+            return View();
         }
+
+
         public ActionResult Index()
         {
             List<tbl_Product> products = _context.tbl_Product.ToList();
@@ -50,9 +55,9 @@ namespace FashionWeb.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Contact()
         {
-
             return View();
         }
 
@@ -98,5 +103,41 @@ namespace FashionWeb.Controllers
                      });
             return View(a);
         }
+
+        public JsonResult Addart()
+        {
+            return Json("ADD", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Remove()
+        {
+            return Json("remove", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult Remove(int id)
+        {
+
+            var Deleted = cart.Delete(id);
+            try
+            {
+                if (Deleted)
+                {
+                    TempData["Message"] = "Cart Item Deleted Successfully";
+                }
+
+                return Json("Remove");
+            }
+            catch
+            {
+                return Json("Error");
+            }
+        }
+
+        public JsonResult Shopadds()
+        {
+            return Json("Shopadds", JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

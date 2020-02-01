@@ -9,6 +9,8 @@
 <link href="~/Content/Slide-bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/slide.css" rel="stylesheet" />
 
+<!-- jQuery (Necessary for All JavaScript Plugins) -->
+<script src="~/Content/Essence/js/jquery/jquery-2.2.4.min.js"></script>
 
 <div class="col-md-3 m-t-b-20">
 
@@ -121,7 +123,6 @@
     </div>
 </div>
 <!-- ##### Top Catagory Area End ##### -->
-
 <!-- ##### CTA Area Start ##### -->
 <div class="cta-area">
     <div class="container">
@@ -160,44 +161,46 @@
                     @foreach (var item in Model)
                     {
                         <!-- Single Product -->
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            @if (item.product.IsNew)
-                            {
-                                <div class="product-img">
-                                    <img src="~/ProductImage/@item.product.Image" alt="">
-                                    <!-- Hover Thumb -->
-                                    <img class="hover-img" src="~/ProductImage/@item.product.Image1" alt="">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        @if (item.product.IsNew)
+                        {
+                            <input type="hidden" id="point" name="userID" value="@item.product.ProductId" />
+                            <div class="product-img">
+                                <img src="~/ProductImage/@item.product.Image" alt="">
+                                <!-- Hover Thumb -->
+                                <img class="hover-img" src="~/ProductImage/@item.product.Image1" alt="">
 
-                                    <!-- Product Badge -->
-                                    <div class="product-badge offer-badge">
-                                        <span>-@item.product.Discount%</span>
-                                    </div>
+                                <!-- Product Badge -->
+                                <div class="product-badge offer-badge">
+                                    <span>-@item.product.Discount%</span>
+                                </div>
 
-                                    <!-- Favourite -->
-                                    <div class="product-favourite">
-                                        <a href="#" class="favme fa fa-heart"></a>
+                                <!-- Favourite -->
+                                <div class="product-favourite">
+                                    <a href="#" class="favme fa fa-heart"></a>
+                                </div>
+                            </div>
+                            <!-- Product Description -->
+                            <div class="product-description">
+                                <span>@item.brand.BrandName</span>
+                                <a href="~/Home/SingleProductDetails?id=@item.product.ProductId">
+                                    <h6>@item.product.Description</h6>
+                                </a>
+                                <p class="product-price">$@item.product.Price</p>
+
+                                <!-- Hover Content -->
+                                <div class="hover-content">
+                                    <!-- Add to Cart -->
+                                    <div class="add-to-cart-btn">
+                                        @*<button id="add-to-cart-@item.product.ProductId" class="btn essence-btn" onclicks="AddCart">Add to Cart</button>*@
+                                        @*<button class="btn essence-btn" onclick="AddShop()">Add to Cart</button>*@
+                                        <a href="~/Home/Shop" class="btn essence-btn">Start Shopping </a>
                                     </div>
                                 </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <span>@item.brand.BrandName</span>
-                                    <a href="~/Home/SingleProductDetails?id=@item.product.ProductId">
-                                        <h6>@item.product.Description</h6>
-                                    </a>
-                                    <p class="product-price">$@item.product.Price</p>
-
-                                    <!-- Hover Content -->
-                                    <div class="hover-content">
-                                        <!-- Add to Cart -->
-                                        <div class="add-to-cart-btn">
-                                            @*<button class="btn essence-btn" onclick="AddCart()">Shop for this </button>*@
-                                            <a href="~/Home/Shop"  class="btn essence-btn">Start Shopping </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
+                            </div>
+                        }
+                    </div>
 
                     }
                 </div>
@@ -206,6 +209,7 @@
     </div>
 </section>
 <!-- ##### New Arrivals Area End ##### -->
+
 <!-- ##### Brands Area Start ##### -->
 <div class="brands-area d-flex align-items-center justify-content-between">
     <!-- Brand Logo -->
@@ -234,4 +238,6 @@
     </div>
 </div>
 <!-- ##### Brands Area End ##### -->
+
+<script src="~/Content/sweetalert.min.js"></script>
 

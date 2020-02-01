@@ -14,17 +14,22 @@ namespace FashionHelpers.CommonHelpers
         private static UserServices memberService = new UserServices();
         private static FashionAppDBEntities _context = new FashionAppDBEntities();
 
-        private static string GetUserIdentifier()
+        public static bool IsAuthenticated()
         {
-            string userDetails = "";
-            if (HttpContext.Current.User != null)
+            return GetActiveUserId > 0;
+        }
+
+        public static tbl_Users GetActiveUser()
+        {
+            if (IsAuthenticated())
             {
-                if (!string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name))
-                {
-                    userDetails = HttpContext.Current.User.Identity.Name;
-                }
+                tbl_Users User = memberService.GetById(GetActiveUserId);
+                UserServices userViewModel = new UserServices();
+                userViewModel.activeUser = User;
+
+                return userViewModel.activeUser;
             }
-            return userDetails;
+            return null;
         }
 
         public static int GetActiveUserId
@@ -45,87 +50,107 @@ namespace FashionHelpers.CommonHelpers
             }
         }
 
-        public static bool IsAuthenticated()
+        public static int UserId
         {
-            return GetActiveUserId > 0;
-        }
-
-        public static tbl_Users GetActiveUser()
-        {
-            if (IsAuthenticated())
+            get
             {
-                tbl_Users User = memberService.GetById(GetActiveUserId);
-                UserServices userViewModel = new UserServices();
-                userViewModel.activeUser = User;
-
-                return userViewModel.activeUser;
+                int userId = 0;
+                var user = GetActiveUser();
+                if (user != null)
+                    userId = user.ID;
+                return userId;
             }
-            return null;
         }
 
-        //public static int GetActiveCartId
-        //{
-        //    get
-        //    {
-        //        int userId = 0;
-        //        string userDetails = GetUserIdentifier();
-        //        if (!string.IsNullOrWhiteSpace(userDetails))
-        //        {
-        //            tbl_Users currentUser = memberService.GetByEmail(userDetails);
-        //            Tbl_Cart currentCart = _context.Tbl_Cart.Where(cart => cart.UserId == currentUser.ID).SingleOrDefault();
-        //            var id = currentCart.CartId.ToString();
-        //            if (int.TryParse(id, out userId))
-        //                return userId;
-        //        }
-        //        return userId;
-        //    }
-        //}
-
-
-        public static IEnumerable<CartViewModel> GetActiveCartlist()
+        private static string GetUserIdentifier()
         {
+            string userDetails = "";
+            if (HttpContext.Current.User != null)
+            {
+                if (!string.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name))
+                {
+                    userDetails = HttpContext.Current.User.Identity.Name;
+                }
+            }
+            return userDetails;
+        }
+
+
+        public static string UserName
+        {
+            get
+            {
+                var User = GetActiveUser();
+                if (User != null)
+                    return User.UserName;
+                return "";
+            }
+        }
+
+        public static IEnumerable<CartViewModel> Carts()
+        {
+            IEnumerable<CartViewModel> cartRecord;
+            int currentUser = Convert.ToInt32(UserId);
             if (IsAuthenticated())
             {
-                List<tbl_Product> products = _context.tbl_Product.ToList();
+                List<tbl_Users> user = _context.tbl_Users.ToList();
                 List<Tbl_Cart> cart = _context.Tbl_Cart.ToList();
-                List<tbl_Category> categories = _context.tbl_Category.ToList();
-                List<tbl_Brands> brands = _context.tbl_Brands.ToList();
-                List<tbl_Users> users = _context.tbl_Users.ToList();
+                List<tbl_Product> prod = _context.tbl_Product.ToList();
+                List<tbl_Category> cat = _context.tbl_Category.ToList();
+                List<tbl_Brands> brand = _context.tbl_Brands.ToList();
 
-                var productRecord = from c in cart
-                                    join d in products on c.ProductId equals d.ProductId into table1
-                                    from d in table1.ToList()
-                                    join u in users on c.UserId equals u.ID into table2
-                                    from u in table2.ToList()
-                                    join e in categories on d.CategoryID equals e.CategoryId into table3
-                                    from e in table3.ToList()
-                                    join b in brands on d.BrandID equals b.ID into table4
-                                    from b in table4.ToList()
-                                    where c.UserId == GetActiveUserId
-                                    select new CartViewModel
-                                    {
-                                         carts = c,
-                                         pro = d,
-                                         user = u,
-                                         category = e,
-                                         brands = b
-                                    };
-                return productRecord;
+                 cartRecord = from ct in cart
+                                 join pd in prod on ct.ProductId equals pd.ProductId into table1
+                                 from pd in table1.ToList()
+                                 join us in user on ct.UserId equals us.ID into table2
+                                 from us in table2.ToList()
+                                 where ct.UserId == currentUser
+                              select new CartViewModel
+                                 {
+                                     c = ct,
+                                     p = pd,
+                                     u = us
+                                 };
+                return cartRecord;
             }
             else
             {
                 return null;
-            }  
+            }
         }
+
+        public static List<Tbl_Cart> CartList()
+        {
+            List<Tbl_Cart> currentCart = new List<Tbl_Cart>();
+
+            int currentUser = Convert.ToInt32(UserId);
+
+            if (IsAuthenticated())
+            {
+                currentCart = (from o in _context.Tbl_Cart
+                               join d in _context.tbl_Product
+                               on o.ProductId equals d.ProductId
+                               join f in _context.tbl_Users
+                               on o.UserId equals f.ID
+                               where o.UserId == currentUser
+                               select o).ToList();
+                return currentCart;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
 
         public class CartViewModel
         {
-            public Tbl_Cart carts { get; set; }
-            public tbl_Product  pro { get; set; }
-            public tbl_Users user { get; set; }
-            public tbl_Category category { get; set; }
-            public tbl_Brands brands { get; set; }
-
+            public tbl_Users u { get; set; }
+            public tbl_Product p { get; set; }
+            public Tbl_Cart c { get; set; }
+            public tbl_Category ca { get; set; }
+            public tbl_Brands br { get; set; }
         }
     }
 }

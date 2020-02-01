@@ -5,6 +5,21 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FashionAppDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productID" Type="int" />
+          <Property Name="userID" Type="int" />
+          <Property Name="categoryID" Type="int" />
+          <Property Name="checked" Type="bit" />
+          <Property Name="BrandID" Type="int" />
+          <Property Name="createdON" Type="datetime" />
+          <Property Name="createdBY" Type="int" />
+          <Property Name="updatedON" Type="datetime" />
+          <Property Name="updatedBY" Type="nchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="tbl_Brands">
           <Key>
             <PropertyRef Name="ID" />
@@ -141,6 +156,7 @@
           <Property Name="UpdatedBy" Type="int" />
         </EntityType>
         <EntityContainer Name="FashionAppDBModelStoreContainer">
+          <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Brands" EntityType="Self.tbl_Brands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Cart" EntityType="Self.Tbl_Cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_CartStatus" EntityType="Self.Tbl_CartStatus" Schema="dbo" store:Type="Tables" />
@@ -167,6 +183,7 @@
           <EntitySet Name="Tbl_Roles" EntityType="FashionAppDBModel.Tbl_Roles" />
           <EntitySet Name="Tbl_ShippingDetails" EntityType="FashionAppDBModel.Tbl_ShippingDetails" />
           <EntitySet Name="Tbl_Profile" EntityType="FashionAppDBModel.Tbl_Profile" />
+          <EntitySet Name="Notifications" EntityType="FashionAppDBModel.Notification" />
         </EntityContainer>
         <EntityType Name="tbl_Brands">
           <Key>
@@ -302,6 +319,21 @@
           <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="PhoneNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="categoryID" Type="Int32" />
+          <Property Name="checked" Type="Boolean" />
+          <Property Name="BrandID" Type="Int32" />
+          <Property Name="createdON" Type="DateTime" Precision="3" />
+          <Property Name="createdBY" Type="Int32" />
+          <Property Name="updatedON" Type="DateTime" Precision="3" />
+          <Property Name="updatedBY" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -451,6 +483,22 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Age" ColumnName="Age" />
                 <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="FashionAppDBModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="updatedBY" ColumnName="updatedBY" />
+                <ScalarProperty Name="updatedON" ColumnName="updatedON" />
+                <ScalarProperty Name="createdBY" ColumnName="createdBY" />
+                <ScalarProperty Name="createdON" ColumnName="createdON" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="checked" ColumnName="checked" />
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

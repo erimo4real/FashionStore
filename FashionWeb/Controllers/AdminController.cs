@@ -28,7 +28,6 @@ namespace FashionWeb.Controllers
         [HttpGet]
         public ActionResult GetProfile()
         {
-           
             return View();
         }
 
