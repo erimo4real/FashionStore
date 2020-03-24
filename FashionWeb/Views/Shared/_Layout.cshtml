@@ -4,6 +4,7 @@
     var userName = FashionHelpers.CommonHelpers.PublicHelper.UserName;
     var carts = FashionHelpers.CommonHelpers.CartPublicHelper.CartList();
     var cartlist = FashionHelpers.CommonHelpers.CartPublicHelper.Carts();
+    var userid = FashionHelpers.CommonHelpers.PublicHelper.UserId;
    
 }
 
@@ -50,27 +51,27 @@
                                 <div class="megamenu">
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">Women's Collection</li>
-                                        <li><a href="shop.html">Dresses</a></li>
-                                        <li><a href="shop.html">Blouses &amp; Shirts</a></li>
-                                        <li><a href="shop.html">T-shirts</a></li>
-                                        <li><a href="shop.html">Rompers</a></li>
-                                        <li><a href="shop.html">Bras &amp; Panties</a></li>
+                                        <li><a href="~/Home/Shop">Dresses</a></li>
+                                        <li><a href="~/Home/Shop">Blouses &amp; Shirts</a></li>
+                                        <li><a href="~/Home/Shop">T-shirts</a></li>
+                                        <li><a href="~/Home/Shop">Rompers</a></li>
+                                        <li><a href="~/Home/Shop">Bras &amp; Panties</a></li>
                                     </ul>
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">Men's Collection</li>
-                                        <li><a href="shop.html">T-Shirts</a></li>
-                                        <li><a href="shop.html">Polo</a></li>
-                                        <li><a href="shop.html">Shirts</a></li>
-                                        <li><a href="shop.html">Jackets</a></li>
-                                        <li><a href="shop.html">Trench</a></li>
+                                        <li><a href="~/Home/Shop">T-Shirts</a></li>
+                                        <li><a href="~/Home/Shop">Polo</a></li>
+                                        <li><a href="~/Home/Shop">Shirts</a></li>
+                                        <li><a href="~/Home/Shop">Jackets</a></li>
+                                        <li><a href="~/Home/Shop">Trench</a></li>
                                     </ul>
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">Kid's Collection</li>
-                                        <li><a href="shop.html">Dresses</a></li>
-                                        <li><a href="shop.html">Shirts</a></li>
-                                        <li><a href="shop.html">T-shirts</a></li>
-                                        <li><a href="shop.html">Jackets</a></li>
-                                        <li><a href="shop.html">Trench</a></li>
+                                        <li><a href="~/Home/Shop">Dresses</a></li>
+                                        <li><a href="~/Home/Shop">Shirts</a></li>
+                                        <li><a href="~/Home/Shop">T-shirts</a></li>
+                                        <li><a href="~/Home/Shop">Jackets</a></li>
+                                        <li><a href="~/Home/Shop">Trench</a></li>
                                     </ul>
                                     <div class="single-mega cn-col-4">
                                         <img src="~/Content/Essence/img/bg-img/bg-6.jpg" alt="">
@@ -191,16 +192,18 @@
                     @{ 
                          var totalDiscount = cartlist.Sum(s => s.p.Discount);
                          var totalPrice = cartlist.Sum(s => s.p.Price);
+                        var total = totalPrice - totalDiscount;
+
                     }
                     <h2>Summary</h2>
                     <ul class="summary-table">
                         <li><span>subtotal:</span> <span>$@totalPrice</span></li>
                         <li><span>delivery:</span> <span>Free</span></li>
                         <li><span>discount:</span> <span>-@totalDiscount%</span></li>
-                        <li><span>total:</span> <span>$@totalPrice</span></li>
+                        <li><span>total:</span> <span>$@total</span></li>
                     </ul>
                     <div class="checkout-btn mt-100">
-                        <a href="checkout.html" class="btn essence-btn">check out</a>
+                        <a href="~/Home/checkout?id=@userid" class="btn essence-btn">check out</a>
                     </div>
                 </div>
             </div>

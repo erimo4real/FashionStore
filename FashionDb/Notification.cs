@@ -18,7 +18,9 @@ namespace FashionDb
         public Nullable<int> productID { get; set; }
         public Nullable<int> userID { get; set; }
         public Nullable<int> categoryID { get; set; }
-        public Nullable<bool> @checked { get; set; }
+        public Nullable<int> CartId { get; set; }
+        public Nullable<bool> newuser { get; set; }
+        public Nullable<bool> Ischecked { get; set; }
         public Nullable<int> BrandID { get; set; }
         public Nullable<System.DateTime> createdON { get; set; }
         public Nullable<int> createdBY { get; set; }

@@ -20,5 +20,6 @@ namespace FashionWeb.Models
         public tbl_Brands brand { get; set; }
         public tbl_Users user { get; set; }
         public Tbl_Cart cart { get; set; }
+        public Tbl_Profile profile { get; set; }
     }
 }

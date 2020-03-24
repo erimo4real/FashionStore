@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FashionWeb.Models;
+using System.Data.Entity;
 
 namespace FashionWeb.Controllers
 {
@@ -14,6 +15,7 @@ namespace FashionWeb.Controllers
     {
         private readonly UserServices UserS;
         public UserViewModel UVM = new UserViewModel();
+        private static FashionAppDBEntities _context = new FashionAppDBEntities();
         public AdminController()
         {
             this.UserS = new UserServices();
@@ -28,7 +30,39 @@ namespace FashionWeb.Controllers
         [HttpGet]
         public ActionResult GetProfile()
         {
+
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult EditMyprofile1(int id)
+        {
+            var result = _context.Tbl_Profile.Where(u => u.UserId == id).SingleOrDefault();
+            return Json(result, JsonRequestBehavior.AllowGet);
+            
+        }
+
+        [HttpGet]
+        public ActionResult EditMyprofile2(int id)
+        {
+            var result = _context.tbl_Users.Where(u => u.ID == id).SingleOrDefault();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult Myprofile(int id)
+        {
+           
+            try
+            {
+                
+                return Json(new { success = true, message = "Order updated successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Error");
+            }
+
         }
 
         [HttpGet]
@@ -39,6 +73,60 @@ namespace FashionWeb.Controllers
             return View(UVM);
         }
 
+
+        [HttpPost]
+        public ActionResult profilework(FormCollection  formCollection , HttpPostedFileBase Image)
+        {
+            int id = Convert.ToInt32(formCollection["userid"]);
+            tbl_Users us = _context.tbl_Users.Where(u => u.ID == id).SingleOrDefault();
+            us.FirstName = formCollection["fname"];
+            us.LastName = formCollection["lname"];
+            us.Email = formCollection["email"];
+            if (Image != null)
+            {
+                string ImageName = System.IO.Path.GetFileName(Image.FileName);
+                string physicalPath = Server.MapPath("~/Passports/" + ImageName);
+                us.ImageName = ImageName;
+                // save image in folder
+                Image.SaveAs(physicalPath);
+                _context.SaveChanges();
+            }
+                _context.SaveChanges();
+            return View("GetProfile");
+        }
+
+        [HttpPost]
+        public ActionResult profilechnge(FormCollection formCollection)
+        {
+            int id = Convert.ToInt32(formCollection["userid"]);
+            Tbl_Profile pr = _context.Tbl_Profile.Where(u => u.UserId == id).SingleOrDefault();
+
+            if (pr == null)
+            {
+                Tbl_Profile prof = new Tbl_Profile();
+                prof.Age =  Convert.ToInt32(formCollection["age"]);
+                prof.Position = formCollection["position"];
+                prof.PhoneNumber = formCollection["phone"];
+                prof.City = formCollection["city"];
+                prof.Address = formCollection["address"];
+                prof.Description = formCollection["description"];
+                prof.UserId = Convert.ToInt32(formCollection["userid"]);
+                _context.Tbl_Profile.Add(prof);
+                _context.SaveChanges();
+            }
+            else
+            {
+                pr.Age = Convert.ToInt32(formCollection["age"]);
+                pr.Position = formCollection["position"];
+                pr.PhoneNumber = formCollection["phone"];
+                pr.City = formCollection["city"];
+                pr.Address = formCollection["address"];
+                pr.Description = formCollection["description"];
+                pr.UserId = Convert.ToInt32(formCollection["userid"]);
+                _context.SaveChanges();
+            }
+            return View("GetProfile");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

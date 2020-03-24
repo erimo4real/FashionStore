@@ -17,10 +17,10 @@ namespace FashionDb
         public int ProfileId { get; set; }
         public Nullable<int> Age { get; set; }
         public Nullable<int> UserId { get; set; }
+        public string PhoneNumber { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
         public string Position { get; set; }
         public string Description { get; set; }
-        public string PhoneNumber { get; set; }
     }
 }

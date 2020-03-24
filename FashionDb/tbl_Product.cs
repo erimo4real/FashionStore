@@ -22,18 +22,18 @@ namespace FashionDb
         public string Image3 { get; set; }
         public Nullable<int> Price { get; set; }
         public Nullable<int> Discount { get; set; }
+        public bool IsSlide { get; set; }
+        public bool IsFeatured { get; set; }
         public bool IsNew { get; set; }
         public string Size { get; set; }
         public string Color { get; set; }
         public string Description { get; set; }
         public Nullable<int> BrandID { get; set; }
+        public string Type { get; set; }
         public Nullable<int> CategoryID { get; set; }
         public Nullable<int> AddedBy { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> AddedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
-        public bool IsFeatured { get; set; }
-        public bool IsSlide { get; set; }
-        public string Type { get; set; }
     }
 }
