@@ -13,7 +13,9 @@
           <Property Name="productID" Type="int" />
           <Property Name="userID" Type="int" />
           <Property Name="categoryID" Type="int" />
-          <Property Name="checked" Type="bit" />
+          <Property Name="CartId" Type="int" />
+          <Property Name="newuser" Type="bit" />
+          <Property Name="Ischecked" Type="bit" />
           <Property Name="BrandID" Type="int" />
           <Property Name="createdON" Type="datetime" />
           <Property Name="createdBY" Type="int" />
@@ -34,6 +36,7 @@
           <Property Name="CartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="int" />
           <Property Name="UserId" Type="int" />
+          <Property Name="price" Type="int" />
           <Property Name="Color" Type="varchar" MaxLength="100" />
           <Property Name="Size" Type="varchar" MaxLength="100" />
           <Property Name="CartStatusId" Type="int" />
@@ -146,6 +149,7 @@
           <Property Name="isEmailVerifield" Type="bit" Nullable="false" />
           <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ResetPasswordCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="isNew" Type="bit" />
           <Property Name="ImageName" Type="varchar" MaxLength="50" />
           <Property Name="isAdmin" Type="bit" Nullable="false" />
           <Property Name="isActive" Type="bit" />
@@ -173,24 +177,63 @@
     <edmx:ConceptualModels>
       <Schema Namespace="FashionAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="FashionAppDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Notifications" EntityType="FashionAppDBModel.Notification" />
           <EntitySet Name="tbl_Brands" EntityType="FashionAppDBModel.tbl_Brands" />
-          <EntitySet Name="tbl_Category" EntityType="FashionAppDBModel.tbl_Category" />
-          <EntitySet Name="tbl_Product" EntityType="FashionAppDBModel.tbl_Product" />
-          <EntitySet Name="tbl_Users" EntityType="FashionAppDBModel.tbl_Users" />
           <EntitySet Name="Tbl_Cart" EntityType="FashionAppDBModel.Tbl_Cart" />
           <EntitySet Name="Tbl_CartStatus" EntityType="FashionAppDBModel.Tbl_CartStatus" />
+          <EntitySet Name="tbl_Category" EntityType="FashionAppDBModel.tbl_Category" />
           <EntitySet Name="Tbl_MemberRole" EntityType="FashionAppDBModel.Tbl_MemberRole" />
+          <EntitySet Name="tbl_Product" EntityType="FashionAppDBModel.tbl_Product" />
+          <EntitySet Name="Tbl_Profile" EntityType="FashionAppDBModel.Tbl_Profile" />
           <EntitySet Name="Tbl_Roles" EntityType="FashionAppDBModel.Tbl_Roles" />
           <EntitySet Name="Tbl_ShippingDetails" EntityType="FashionAppDBModel.Tbl_ShippingDetails" />
-          <EntitySet Name="Tbl_Profile" EntityType="FashionAppDBModel.Tbl_Profile" />
-          <EntitySet Name="Notifications" EntityType="FashionAppDBModel.Notification" />
+          <EntitySet Name="tbl_Users" EntityType="FashionAppDBModel.tbl_Users" />
         </EntityContainer>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="categoryID" Type="Int32" />
+          <Property Name="CartId" Type="Int32" />
+          <Property Name="newuser" Type="Boolean" />
+          <Property Name="Ischecked" Type="Boolean" />
+          <Property Name="BrandID" Type="Int32" />
+          <Property Name="createdON" Type="DateTime" Precision="3" />
+          <Property Name="createdBY" Type="Int32" />
+          <Property Name="updatedON" Type="DateTime" Precision="3" />
+          <Property Name="updatedBY" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
         <EntityType Name="tbl_Brands">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BrandName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Cart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="Color" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CartStatusId" Type="Int32" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ShippingDetailId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tbl_CartStatus">
+          <Key>
+            <PropertyRef Name="CartStatusId" />
+          </Key>
+          <Property Name="CartStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CartStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_Category">
           <Key>
@@ -203,76 +246,6 @@
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="Int32" />
         </EntityType>
-        <EntityType Name="tbl_Product">
-          <Key>
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="ProductId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-          <Property Name="Name" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="Gender" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="Image" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="Image1" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="Image3" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="Price" Type="Int32" />
-          <Property Name="Discount" Type="Int32" />
-          <Property Name="IsNew" Type="Boolean" Nullable="false" />
-          <Property Name="Size" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="Color" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="Description" MaxLength="250" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="BrandID" Type="Int32" />
-          <Property Name="CategoryID" Type="Int32" />
-          <Property Name="AddedBy" Type="Int32" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="AddedOn" Precision="3" Type="DateTime" />
-          <Property Name="UpdatedOn" Precision="3" Type="DateTime" />
-          <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
-          <Property Name="IsSlide" Type="Boolean" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="tbl_Users">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DOB" Type="DateTime" Precision="3" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="isEmailVerifield" Type="Boolean" Nullable="false" />
-          <Property Name="ActivationCode" Type="Guid" Nullable="false" />
-          <Property Name="ResetPasswordCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="isAdmin" Type="Boolean" Nullable="false" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="AddedON" Type="DateTime" Precision="3" />
-          <Property Name="AddedBy" Type="Int32" />
-          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Tbl_Cart">
-          <Key>
-            <PropertyRef Name="CartId" />
-          </Key>
-          <Property Name="CartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="CartStatusId" Type="Int32" />
-          <Property Name="AddedOn" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="ShippingDetailId" Type="Int32" />
-          <Property Name="Color" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Size" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Tbl_CartStatus">
-          <Key>
-            <PropertyRef Name="CartStatusId" />
-          </Key>
-          <Property Name="CartStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CartStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Tbl_MemberRole">
           <Key>
             <PropertyRef Name="MemberRoleId" />
@@ -280,6 +253,45 @@
           <Property Name="MemberRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="RoleId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Image1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Image3" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="Discount" Type="Int32" />
+          <Property Name="IsSlide" Type="Boolean" Nullable="false" />
+          <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
+          <Property Name="IsNew" Type="Boolean" Nullable="false" />
+          <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BrandID" Type="Int32" />
+          <Property Name="Type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="AddedBy" Type="Int32" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Tbl_Profile">
+          <Key>
+            <PropertyRef Name="ProfileId" />
+          </Key>
+          <Property Name="ProfileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tbl_Roles">
           <Key>
@@ -307,45 +319,83 @@
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tbl_Profile">
-          <Key>
-            <PropertyRef Name="ProfileId" />
-          </Key>
-          <Property Name="ProfileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Age" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Notification">
+        <EntityType Name="tbl_Users">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="productID" Type="Int32" />
-          <Property Name="userID" Type="Int32" />
-          <Property Name="categoryID" Type="Int32" />
-          <Property Name="checked" Type="Boolean" />
-          <Property Name="BrandID" Type="Int32" />
-          <Property Name="createdON" Type="DateTime" Precision="3" />
-          <Property Name="createdBY" Type="Int32" />
-          <Property Name="updatedON" Type="DateTime" Precision="3" />
-          <Property Name="updatedBY" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isEmailVerifield" Type="Boolean" Nullable="false" />
+          <Property Name="ActivationCode" Type="Guid" Nullable="false" />
+          <Property Name="ResetPasswordCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="isNew" Type="Boolean" />
+          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="AddedON" Type="DateTime" Precision="3" />
+          <Property Name="AddedBy" Type="Int32" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="FashionAppDBModelStoreContainer" CdmEntityContainer="FashionAppDBEntities">
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="FashionAppDBModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="updatedBY" ColumnName="updatedBY" />
+                <ScalarProperty Name="updatedON" ColumnName="updatedON" />
+                <ScalarProperty Name="createdBY" ColumnName="createdBY" />
+                <ScalarProperty Name="createdON" ColumnName="createdON" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="Ischecked" ColumnName="Ischecked" />
+                <ScalarProperty Name="newuser" ColumnName="newuser" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Brands">
             <EntityTypeMapping TypeName="FashionAppDBModel.tbl_Brands">
               <MappingFragment StoreEntitySet="tbl_Brands">
                 <ScalarProperty Name="BrandName" ColumnName="BrandName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Cart">
+            <EntityTypeMapping TypeName="FashionAppDBModel.Tbl_Cart">
+              <MappingFragment StoreEntitySet="Tbl_Cart">
+                <ScalarProperty Name="ShippingDetailId" ColumnName="ShippingDetailId" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_CartStatus">
+            <EntityTypeMapping TypeName="FashionAppDBModel.Tbl_CartStatus">
+              <MappingFragment StoreEntitySet="Tbl_CartStatus">
+                <ScalarProperty Name="CartStatus" ColumnName="CartStatus" />
+                <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -361,22 +411,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_MemberRole">
+            <EntityTypeMapping TypeName="FashionAppDBModel.Tbl_MemberRole">
+              <MappingFragment StoreEntitySet="Tbl_MemberRole">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MemberRoleId" ColumnName="MemberRoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Product">
             <EntityTypeMapping TypeName="FashionAppDBModel.tbl_Product">
               <MappingFragment StoreEntitySet="tbl_Product">
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="IsSlide" ColumnName="IsSlide" />
-                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="IsSlide" ColumnName="IsSlide" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Image3" ColumnName="Image3" />
@@ -388,59 +447,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_Users">
-            <EntityTypeMapping TypeName="FashionAppDBModel.tbl_Users">
-              <MappingFragment StoreEntitySet="tbl_Users">
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
-                <ScalarProperty Name="AddedON" ColumnName="AddedON" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
-                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-                <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
-                <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
-                <ScalarProperty Name="isEmailVerifield" ColumnName="isEmailVerifield" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Cart">
-            <EntityTypeMapping TypeName="FashionAppDBModel.Tbl_Cart">
-              <MappingFragment StoreEntitySet="Tbl_Cart">
-                <ScalarProperty Name="Size" ColumnName="Size" />
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="ShippingDetailId" ColumnName="ShippingDetailId" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
-                <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
+          <EntitySetMapping Name="Tbl_Profile">
+            <EntityTypeMapping TypeName="FashionAppDBModel.Tbl_Profile">
+              <MappingFragment StoreEntitySet="Tbl_Profile">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="CartId" ColumnName="CartId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_CartStatus">
-            <EntityTypeMapping TypeName="FashionAppDBModel.Tbl_CartStatus">
-              <MappingFragment StoreEntitySet="Tbl_CartStatus">
-                <ScalarProperty Name="CartStatus" ColumnName="CartStatus" />
-                <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_MemberRole">
-            <EntityTypeMapping TypeName="FashionAppDBModel.Tbl_MemberRole">
-              <MappingFragment StoreEntitySet="Tbl_MemberRole">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="MemberRoleId" ColumnName="MemberRoleId" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -472,32 +489,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Profile">
-            <EntityTypeMapping TypeName="FashionAppDBModel.Tbl_Profile">
-              <MappingFragment StoreEntitySet="Tbl_Profile">
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="FashionAppDBModel.Notification">
-              <MappingFragment StoreEntitySet="Notification">
-                <ScalarProperty Name="updatedBY" ColumnName="updatedBY" />
-                <ScalarProperty Name="updatedON" ColumnName="updatedON" />
-                <ScalarProperty Name="createdBY" ColumnName="createdBY" />
-                <ScalarProperty Name="createdON" ColumnName="createdON" />
-                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
-                <ScalarProperty Name="checked" ColumnName="checked" />
-                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
-                <ScalarProperty Name="userID" ColumnName="userID" />
-                <ScalarProperty Name="productID" ColumnName="productID" />
+          <EntitySetMapping Name="tbl_Users">
+            <EntityTypeMapping TypeName="FashionAppDBModel.tbl_Users">
+              <MappingFragment StoreEntitySet="tbl_Users">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="AddedON" ColumnName="AddedON" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="isNew" ColumnName="isNew" />
+                <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
+                <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+                <ScalarProperty Name="isEmailVerifield" ColumnName="isEmailVerifield" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

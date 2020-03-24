@@ -17,6 +17,7 @@ namespace FashionHelpers.CommonHelpers
         private readonly static int _saltSize = 10;
         private readonly static int _ranNumber = 5;
         private static UserServices  memberService = new UserServices();
+        private static FashionAppDBEntities _context = new FashionAppDBEntities();
         public string HashPassword(string password)
         {
             string hash = string.Empty;
@@ -128,11 +129,18 @@ namespace FashionHelpers.CommonHelpers
             }
         }
 
+        public static Tbl_Profile userProfile()
+        {
+            var id = Convert.ToInt32(UserId);
+            Tbl_Profile profile = _context.Tbl_Profile.Where(p => p.UserId == id).SingleOrDefault();
+            return profile;
+        }
+
         public static string UserId
         {
             get
             {
-                string userId = "";
+                string userId = null;
                 var user = GetActiveUser();
                 if (user != null)
                     userId = user.ID.ToString();
@@ -185,6 +193,29 @@ namespace FashionHelpers.CommonHelpers
                 return "";
             }
         }
+
+        public static List<tbl_Product> product()
+        {
+           List<tbl_Product> pro;
+            if (IsAuthenticated())
+            {
+                pro = _context.tbl_Product.ToList();
+                return pro;
+            }
+            return pro = null;
+        }
+
+        public static List<tbl_Users> user()
+        {
+            List<tbl_Users> u;
+            if (IsAuthenticated())
+            {
+                u = _context.tbl_Users.ToList();
+                return u;
+            }
+            return u = null;
+        }
+
 
     }
 }

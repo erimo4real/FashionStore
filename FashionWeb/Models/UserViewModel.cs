@@ -12,6 +12,7 @@ namespace FashionWeb.Models
         public IEnumerable<tbl_Users> users { get; set; }
         public tbl_Users user { get; set; }
         public string Image { get; set; }
+        public ProfileViewModel userProfile { get; set; }
 
     }
 

@@ -27,16 +27,38 @@ namespace FashionWeb.Controllers
      
         public ActionResult AddProductToCart(HomeViewModel Model, FormCollection collection)
         {
-            var productId = Convert.ToInt32(collection["userid"]);  
+            var userid = PublicHelper.UserId;
+
+            if (userid == null || userid == "")
+            {
+                TempData["Login"] = "You will have to register  before you can shop ";
+                TempData["Status"] = false;
+                return RedirectToAction("Login", "Account");
+            }
+           
+            var productId = Convert.ToInt32(collection["userid"]);
+            var cartid = Convert.ToInt32(userid);
+            var getproduct = _context.tbl_Product.Where(p => p.ProductId == productId).SingleOrDefault();
+         
             Tbl_Cart c = new Tbl_Cart();
+            Notification n = new Notification();
             c.AddedOn = DateTime.Now;
             c.CartStatusId = 1;
-            c.UserId = Convert.ToInt32(PublicHelper.UserId);
+            c.UserId = Convert.ToInt32(userid);
             c.ProductId = productId;
             c.Size = collection["selectsize"];
             c.Color = collection["selectcolor"];
             c.UpdatedOn = DateTime.Now;
             _context.Tbl_Cart.Add(c);
+            _context.SaveChanges();
+            n.Ischecked = true;
+            n.createdBY = Convert.ToInt32(userid);
+            n.userID = Convert.ToInt32(userid);
+            n.createdON = DateTime.Now;
+            n.productID = productId;
+            n.categoryID = getproduct.CategoryID;
+            n.BrandID = getproduct.BrandID;
+            _context.Notifications.Add(n);
             _context.SaveChanges();
             TempData["ProductAddedToCart"] = "Product added to cart successfully";
             TempData["Status"] = true;
@@ -62,7 +84,6 @@ namespace FashionWeb.Controllers
                                 from u in table2.ToList()
                                 select new CartViewModel
                                 {
-
                                     cart = c,
                                     product = d,
                                     user = u

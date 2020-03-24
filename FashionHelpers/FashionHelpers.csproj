@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonHelpers\CartPublicHelper.cs" />
+    <Compile Include="CommonHelpers\NotificationPublucHelper.cs" />
     <Compile Include="CommonHelpers\ProductPublicHelper.cs" />
     <Compile Include="CommonHelpers\PublicHelper.cs" />
     <Compile Include="HelperServices\CartService.cs" />

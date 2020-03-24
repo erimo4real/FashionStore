@@ -24,6 +24,7 @@ namespace FashionDb
         public bool isEmailVerifield { get; set; }
         public System.Guid ActivationCode { get; set; }
         public string ResetPasswordCode { get; set; }
+        public Nullable<bool> isNew { get; set; }
         public string ImageName { get; set; }
         public bool isAdmin { get; set; }
         public Nullable<bool> isActive { get; set; }

@@ -61,7 +61,7 @@ namespace FashionWeb.Controllers
             return View();
         }
 
-        public ActionResult Shop(int page = 1)
+        public ActionResult Shop(int page = 1 , string name = "" )
         {
             ViewBag.brands = _context.tbl_Brands.ToList();
             ViewBag.Category = _context.tbl_Category.ToList();
@@ -86,7 +86,19 @@ namespace FashionWeb.Controllers
 
         public ActionResult checkout(int id)
         {
-            return View();
+            var checkout = (from cart in _context.Tbl_Cart
+                     join prod in _context.tbl_Product on cart.ProductId equals prod.ProductId
+                     join u  in _context.tbl_Users on cart.UserId equals u.ID
+                     where cart.UserId == id
+                     select new CartViewModel
+                     {
+                           product = prod,
+                           user  = u,
+                           cart = cart
+                     });
+            ViewBag.User = _context.tbl_Users.Where(u => u.ID == id).SingleOrDefault();
+
+            return View(checkout);
         }
 
         public ActionResult SingleProductDetails(int id)

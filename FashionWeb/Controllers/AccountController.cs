@@ -28,6 +28,14 @@ namespace FashionWeb.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+            if (TempData.ContainsKey("Login"))
+            {
+                ViewBag.Message = TempData["Login"] as string;
+            }
+            if (TempData.ContainsKey("Status"))
+            {
+                ViewBag.Status = TempData["Status"];
+            }
             return View();
         }
 
@@ -333,7 +341,7 @@ namespace FashionWeb.Controllers
         public ActionResult Logout()
         {
             PublicHelper.Logout();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("index", "Home");
         }
 
     }

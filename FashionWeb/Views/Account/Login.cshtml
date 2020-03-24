@@ -37,10 +37,30 @@
 
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    if (ViewBag.Message != "")
+                    if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
                     {
-                        <div class="text-danger">@ViewBag.Message</div>
+                        if (ViewBag.Message != null)
+                        {
+                            <div class="alert alert-success">
+                                <strong>Success!</strong>@ViewBag.Message
+                            </div>
+                        }
                     }
+
+                    if (ViewBag.Status != null && !Convert.ToBoolean(ViewBag.Status))
+                    {
+                        if (ViewBag.Message != null)
+                        {
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong>@ViewBag.Message
+                            </div>
+                        }
+                    }
+
+                    @*if (ViewBag.Message != "")
+            {
+                <div class="text-danger">@ViewBag.Message</div>
+            }*@
 
                     <div class="form-group mb-4">
                         <div>
@@ -67,17 +87,17 @@
                         @*<a href="#" class="auth-link text-black">Forgot password?</a>*@
                     </div>
                     @*<div class="row">
-                            <div class="col-md-6 mb-4">
-                                <a href="#" class="btn btn-outline-facebook btn-block">
-                                    <i class="fa fa-facebook-square m-r-5"></i> With Facebook
-                                </a>
-                            </div>
-                            <div class="col-md-6 mb-4">
-                                <a href="#" class="btn btn-outline-google btn-block">
-                                    <i class="fa fa-google m-r-5"></i> With Google
-                                </a>
-                            </div>
-                        </div>*@
+                <div class="col-md-6 mb-4">
+                    <a href="#" class="btn btn-outline-facebook btn-block">
+                        <i class="fa fa-facebook-square m-r-5"></i> With Facebook
+                    </a>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <a href="#" class="btn btn-outline-google btn-block">
+                        <i class="fa fa-google m-r-5"></i> With Google
+                    </a>
+                </div>
+            </div>*@
                     <div class="text-center">
                         Don't have an account?    @Html.ActionLink(" Sign Up Here", "Register", "Account")
                     </div>

@@ -1,4 +1,8 @@
-﻿<!doctype html>
+﻿@{ 
+    var user = FashionHelpers.CommonHelpers.PublicHelper.user();
+    var pro = FashionHelpers.CommonHelpers.PublicHelper.product();
+}
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -47,83 +51,86 @@
         <!-- end::page header -->
 
         <div class="row">
-            <div class="col-lg-3 col-sm-12">
+            @if (Request.IsAuthenticated)
+            {
+                <div class="col-lg-3 col-sm-12">
 
-                <div class="card">
-                    <div class="card-body">
-                        <h6>
-                            <i class="fa fa-money m-r-10 text-primary"></i> Revenue
-                        </h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>All Sales</span>
-                            <h2 class="m-b-0 text-primary">$18M</h2>
-                        </div>
-                        <div class="progress m-t-b-10" style="height: 7px">
-                            <div class="progress-bar bg-primary-gradient" role="progressbar" style="width: 71%"
-                                 aria-valuenow="71" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-lg-3 col-md-12">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h6>
-                            <i class="fa fa-globe m-r-10 text-dribbble"></i> Affiliates
-                        </h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>Direct</span>
-                            <h2 class="m-b-0 text-dribbble">$35M</h2>
-                        </div>
-                        <div class="progress m-t-b-10" style="height: 7px">
-                            <div class="progress-bar bg-dribbble" role="progressbar" style="width: 39%"
-                                 aria-valuenow="39" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>
+                                <i class="fa fa-money m-r-10 text-primary"></i> Revenue
+                            </h6>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>All Sales</span>
+                                <h2 class="m-b-0 text-primary">0</h2>
+                            </div>
+                            <div class="progress m-t-b-10" style="height: 7px">
+                                <div class="progress-bar bg-primary-gradient" role="progressbar" style="width: 71%"
+                                     aria-valuenow="71" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
+                <div class="col-lg-3 col-md-12">
 
-            </div>
-            <div class="col-lg-3 col-md-12">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h6>
-                            <i class="fa fa-user text-success m-r-10"></i> Burn Rate
-                        </h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>Phone</span>
-                            <h2 class="m-b-0 text-success">$5M</h2>
-                        </div>
-                        <div class="progress m-t-b-10" style="height: 7px">
-                            <div class="progress-bar bg-success-gradient" role="progressbar" style="width: 50%"
-                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>
+                                <i class="fa fa-globe m-r-10 text-dribbble"></i> Total Product
+                            </h6>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Total Cost</span>
+                                <h2 class="m-b-0 text-dribbble">$@pro.Sum(p => p.Price)</h2>
+                            </div>
+                            <div class="progress m-t-b-10" style="height: 7px">
+                                <div class="progress-bar bg-dribbble" role="progressbar" style="width: @pro.Count()%"
+                                     aria-valuenow="39" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
+                <div class="col-lg-3 col-md-12">
 
-            </div>
-            <div class="col-lg-3 col-md-12">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h6>
-                            <i class="fa fa-star text-warning m-r-10"></i> Burn Rate
-                        </h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>Social Media</span>
-                            <h2 class="m-b-0 text-warning">$5M</h2>
-                        </div>
-                        <div class="progress m-t-b-10" style="height: 7px">
-                            <div class="progress-bar bg-warning-gradient" role="progressbar" style="width: 50%"
-                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>
+                                <i class="fa fa-user text-success m-r-10"></i>Customer
+                            </h6>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>couunt</span>
+                                <h2 class="m-b-0 text-success">@user.Where(u => u.isAdmin == false).Count()</h2>
+                            </div>
+                            <div class="progress m-t-b-10" style="height: 7px">
+                                <div class="progress-bar bg-success-gradient" role="progressbar" style="width: @user.Where(u => u.isAdmin == false).Count()%"
+                                     aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
+                <div class="col-lg-3 col-md-12">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>
+                                <i class="fa fa-star text-warning m-r-10"></i>New Customer 
+                            </h6>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Count</span>
+                                <h2 class="m-b-0 text-warning">@user.Where(u => u.isAdmin == false && u.isNew == true).Count()</h2>
+                            </div>
+                            <div class="progress m-t-b-10" style="height: 7px">
+                                <div class="progress-bar bg-warning-gradient" role="progressbar" style="width: @user.Where(u => u.isAdmin == false && u.isNew == true).Count()%"
+                                     aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
             </div>
-        </div>
 
         @RenderBody();
 

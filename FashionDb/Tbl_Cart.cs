@@ -17,11 +17,12 @@ namespace FashionDb
         public int CartId { get; set; }
         public Nullable<int> ProductId { get; set; }
         public Nullable<int> UserId { get; set; }
+        public Nullable<int> price { get; set; }
+        public string Color { get; set; }
+        public string Size { get; set; }
         public Nullable<int> CartStatusId { get; set; }
         public Nullable<System.DateTime> AddedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public Nullable<int> ShippingDetailId { get; set; }
-        public string Color { get; set; }
-        public string Size { get; set; }
     }
 }
